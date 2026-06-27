@@ -169,6 +169,12 @@
                 <artifactId>health-common</artifactId>
                 <version>${health.version}</version>
             </dependency>
+            <!-- 预约管理-->
+            <dependency>
+                <groupId>com.health</groupId>
+                <artifactId>health-reservation</artifactId>
+                <version>${health.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -180,6 +186,7 @@
         <module>health-quartz</module>
         <module>health-generator</module>
         <module>health-common</module>
+        <module>health-reservation</module>
     </modules>
     <packaging>pom</packaging>
 

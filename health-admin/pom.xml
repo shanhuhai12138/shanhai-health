@@ -53,6 +53,11 @@
             <groupId>com.health</groupId>
             <artifactId>health-generator</artifactId>
         </dependency>
+        <!-- 预约管理模块 -->
+        <dependency>
+            <groupId>com.health</groupId>
+            <artifactId>health-reservation</artifactId>
+        </dependency>
 
     </dependencies>
 
