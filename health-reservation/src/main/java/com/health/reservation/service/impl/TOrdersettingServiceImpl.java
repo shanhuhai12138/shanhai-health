@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.health.common.core.domain.AjaxResult;
 import com.health.reservation.vo.OrderSettingVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,8 @@ import com.health.reservation.service.ITOrdersettingService;
 @Service
 public class TOrdersettingServiceImpl implements ITOrdersettingService
 {
+    private static final Logger log = LoggerFactory.getLogger(TOrdersettingServiceImpl.class);
+
     @Autowired
     private TOrdersettingMapper tOrdersettingMapper;
 
@@ -130,10 +135,11 @@ public class TOrdersettingServiceImpl implements ITOrdersettingService
      * 导入预约设置数据
      *
      * @param file 导入的文件
+     * @return 导入结果信息
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void importOrderSetting(MultipartFile file) throws Exception
+    public AjaxResult importOrderSetting(MultipartFile file) throws Exception
     {
         // 1. 使用若依内置 ExcelUtil 解析 Excel
         ExcelUtil<TOrdersetting> util = new ExcelUtil<TOrdersetting>(TOrdersetting.class);
@@ -147,17 +153,21 @@ public class TOrdersettingServiceImpl implements ITOrdersettingService
         // 2. 遍历数据，判断是新增还是更新（按 orderDate 唯一）
         List<TOrdersetting> insertList = new ArrayList<>();
         List<TOrdersetting> updateList = new ArrayList<>();
+        int skipCount = 0;
 
         for (TOrdersetting setting : list)
         {
             // 跳过 null 行（Excel 中的空行）
             if (setting == null)
             {
+                skipCount++;
                 continue;
             }
             // 跳过无效数据
             if (setting.getOrderDate() == null || setting.getNumber() == null)
             {
+                skipCount++;
+                log.warn("跳过无效数据（日期或人数为空）: orderDate={}, number={}", setting.getOrderDate(), setting.getNumber());
                 continue;
             }
 
@@ -176,6 +186,8 @@ public class TOrdersettingServiceImpl implements ITOrdersettingService
             }
         }
 
+        log.info("Excel导入: 总行数={}, 新增={}, 更新={}, 跳过={}", list.size(), insertList.size(), updateList.size(), skipCount);
+
         // 3. 批量插入
         if (!insertList.isEmpty())
         {
@@ -187,5 +199,8 @@ public class TOrdersettingServiceImpl implements ITOrdersettingService
         {
             tOrdersettingMapper.updateTOrdersetting(item);
         }
+
+        // 返回详细统计信息
+        return AjaxResult.success("导入完成，共处理 " + list.size() + " 条，新增 " + insertList.size() + " 条，更新 " + updateList.size() + " 条，跳过 " + skipCount + " 条");
     }
 }

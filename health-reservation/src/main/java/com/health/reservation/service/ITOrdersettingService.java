@@ -73,6 +73,7 @@ public interface ITOrdersettingService
      * 导入预约设置数据
      *
      * @param file 导入的文件
+     * @return 导入结果信息
      */
-    public void importOrderSetting(MultipartFile file) throws Exception;
+    public AjaxResult importOrderSetting(MultipartFile file) throws Exception;
 }

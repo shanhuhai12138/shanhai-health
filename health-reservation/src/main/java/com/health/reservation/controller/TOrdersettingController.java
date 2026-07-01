@@ -127,8 +127,11 @@ public class TOrdersettingController extends BaseController
             {
                 return AjaxResult.error("文件不能为空");
             }
-            tOrdersettingService.importOrderSetting(file);
-            return AjaxResult.success("上传成功");
+            return tOrdersettingService.importOrderSetting(file);
+        }
+        catch (IllegalArgumentException e)
+        {
+            return AjaxResult.error("导入失败：" + e.getMessage());
         }
         catch (Exception e)
         {
