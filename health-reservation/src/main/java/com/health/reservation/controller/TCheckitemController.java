@@ -23,7 +23,7 @@ import com.health.common.core.page.TableDataInfo;
 
 /**
  * 检查项管理Controller
- * 
+ *
  * @author ruoyi
  * @date 2026-06-26
  */
@@ -60,13 +60,13 @@ public class TCheckitemController extends BaseController
     }
 
     /**
-     * 获取检查项管理详细信息
+     * 查询所有检查项
      */
-    @PreAuthorize("@ss.hasPermi('reservation:checkitem:query')")
-    @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
+    @PreAuthorize("@ss.hasPermi('reservation:checkitem:list')")
+    @GetMapping("/all")
+    public AjaxResult all()
     {
-        return success(tCheckitemService.selectTCheckitemById(id));
+        return success(tCheckitemService.selectTCheckitemList(null));
     }
 
     /**
@@ -92,11 +92,21 @@ public class TCheckitemController extends BaseController
     }
 
     /**
+     * 获取检查项管理详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:checkitem:query')")
+    @GetMapping("/{id}")
+    public AjaxResult getInfo(@PathVariable("id") Long id)
+    {
+        return success(tCheckitemService.selectTCheckitemById(id));
+    }
+
+    /**
      * 删除检查项管理
      */
     @PreAuthorize("@ss.hasPermi('reservation:checkitem:remove')")
     @Log(title = "检查项管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(tCheckitemService.deleteTCheckitemByIds(ids));

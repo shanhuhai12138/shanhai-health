@@ -7,7 +7,7 @@ import com.health.common.core.domain.BaseEntity;
 
 /**
  * 检查组管理对象 t_checkgroup
- * 
+ *
  * @author ruoyi
  * @date 2026-06-27
  */
@@ -38,64 +38,77 @@ public class TCheckgroup extends BaseEntity
     @Excel(name = "注意事项")
     private String attention;
 
-    public void setId(Long id) 
+    /** 关联的检查项ID列表（非数据库字段，仅用于前端回显） */
+    private Long[] checkItemIds;
+
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
 
-    public void setCode(String code) 
+    public void setCode(String code)
     {
         this.code = code;
     }
 
-    public String getCode() 
+    public String getCode()
     {
         return code;
     }
 
-    public void setName(String name) 
+    public void setName(String name)
     {
         this.name = name;
     }
 
-    public String getName() 
+    public String getName()
     {
         return name;
     }
 
-    public void setHelpCode(String helpCode) 
+    public void setHelpCode(String helpCode)
     {
         this.helpCode = helpCode;
     }
 
-    public String getHelpCode() 
+    public String getHelpCode()
     {
         return helpCode;
     }
 
-    public void setSex(String sex) 
+    public void setSex(String sex)
     {
         this.sex = sex;
     }
 
-    public String getSex() 
+    public String getSex()
     {
         return sex;
     }
 
-    public void setAttention(String attention) 
+    public void setAttention(String attention)
     {
         this.attention = attention;
     }
 
-    public String getAttention() 
+    public String getAttention()
     {
         return attention;
+    }
+
+    public void setCheckItemIds(Long[] checkItemIds)
+    {
+        this.checkItemIds = checkItemIds;
+    }
+
+    public Long[] getCheckItemIds()
+    {
+        return checkItemIds;
     }
 
     @Override
