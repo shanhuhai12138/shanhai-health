@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.health.reservation.mapper.TOrdersettingMapper">
-    
+
     <resultMap type="TOrdersetting" id="TOrdersettingResult">
         <result property="id"    column="id"    />
         <result property="orderDate"    column="order_date"    />
@@ -17,17 +17,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTOrdersettingList" parameterType="TOrdersetting" resultMap="TOrdersettingResult">
         <include refid="selectTOrdersettingVo"/>
-        <where>  
+        <where>
             <if test="orderDate != null "> and order_date = #{orderDate}</if>
             <if test="number != null "> and number = #{number}</if>
             <if test="reservations != null "> and reservations = #{reservations}</if>
         </where>
     </select>
-    
+
     <select id="selectTOrdersettingById" parameterType="Long" resultMap="TOrdersettingResult">
         <include refid="selectTOrdersettingVo"/>
         where id = #{id}
     </select>
+
+    <select id="selectByYearMonth" resultMap="TOrdersettingResult">
+        <include refid="selectTOrdersettingVo"/>
+        WHERE DATE_FORMAT(order_date, '%Y-%m') = #{yearMonth}
+        ORDER BY order_date
+    </select>
+
+    <!-- 按日期查询 -->
+    <select id="selectByOrderDate" parameterType="java.util.Date" resultMap="TOrdersettingResult">
+        SELECT id, order_date, number, reservations
+        FROM t_ordersetting
+        WHERE order_date = #{orderDate}
+    </select>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_ordersetting (order_date, number, reservations)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.orderDate}, #{item.number}, #{item.reservations})
+        </foreach>
+    </insert>
 
     <insert id="insertTOrdersetting" parameterType="TOrdersetting" useGeneratedKeys="true" keyProperty="id">
         insert into t_ordersetting
@@ -58,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTOrdersettingByIds" parameterType="String">
-        delete from t_ordersetting where id in 
+        delete from t_ordersetting where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

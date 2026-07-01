@@ -4,14 +4,8 @@ import java.util.List;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import com.health.common.annotation.Log;
 import com.health.common.core.controller.BaseController;
 import com.health.common.core.domain.AjaxResult;
@@ -23,7 +17,7 @@ import com.health.common.core.page.TableDataInfo;
 
 /**
  * 预约设置Controller
- * 
+ *
  * @author ruoyi
  * @date 2026-06-30
  */
@@ -96,9 +90,50 @@ public class TOrdersettingController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('reservation:ordersetting:remove')")
     @Log(title = "预约设置", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(tOrdersettingService.deleteTOrdersettingByIds(ids));
+    }
+
+    /**
+     * 按年月获取预约设置（用于日历展示）
+     */
+    @GetMapping("/getOrderSettingByMonth")
+    public AjaxResult getOrderSettingByMonth(@RequestParam String month)
+    {
+        try
+        {
+            List<com.health.reservation.vo.OrderSettingVO> list = tOrdersettingService.getOrderSettingByMonth(month);
+            return AjaxResult.success(list);
+        }
+        catch (Exception e)
+        {
+            return AjaxResult.error("获取预约设置失败：" + e.getMessage());
+        }
+    }
+
+    /**
+     * 上传 Excel 文件并导入预约设置
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:ordersetting:import')")
+    @Log(title = "预约设置", businessType = BusinessType.IMPORT)
+    @PostMapping("/upload")
+    public AjaxResult upload(@RequestParam("excelFile") MultipartFile file)
+    {
+        try
+        {
+            if (file.isEmpty())
+            {
+                return AjaxResult.error("文件不能为空");
+            }
+            tOrdersettingService.importOrderSetting(file);
+            return AjaxResult.success("上传成功");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return AjaxResult.error("导入失败：" + e.getMessage());
+        }
     }
 }
