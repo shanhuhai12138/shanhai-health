@@ -1,5 +1,6 @@
 package com.health.reservation.controller;
 
+import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -94,6 +95,16 @@ public class TOrdersettingController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(tOrdersettingService.deleteTOrdersettingByIds(ids));
+    }
+
+    /**
+     * 下载预约设置导入模板
+     */
+    @GetMapping("/downloadTemplate")
+    public void downloadTemplate(HttpServletResponse response) throws IOException
+    {
+        ExcelUtil<TOrdersetting> util = new ExcelUtil<TOrdersetting>(TOrdersetting.class);
+        util.importTemplateExcel(response, "预约设置数据");
     }
 
     /**
