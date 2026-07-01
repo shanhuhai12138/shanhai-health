@@ -2,6 +2,7 @@ package com.health.reservation.service;
 
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
+import com.health.common.core.domain.AjaxResult;
 import com.health.reservation.domain.TOrdersetting;
 import com.health.reservation.vo.OrderSettingVO;
 
