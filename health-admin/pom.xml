@@ -58,6 +58,11 @@
             <groupId>com.health</groupId>
             <artifactId>health-reservation</artifactId>
         </dependency>
+        <!-- AI大模型模块 -->
+        <dependency>
+            <groupId>com.health</groupId>
+            <artifactId>health-ai</artifactId>
+        </dependency>
         <!-- 系统模块 -->
         <dependency>
             <groupId>com.health</groupId>

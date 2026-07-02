@@ -176,6 +176,13 @@
                 <version>${health.version}</version>
             </dependency>
 
+            <!-- AI大模型 -->
+            <dependency>
+                <groupId>com.health</groupId>
+                <artifactId>health-ai</artifactId>
+                <version>${health.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -187,6 +194,7 @@
         <module>health-generator</module>
         <module>health-common</module>
         <module>health-reservation</module>
+        <module>health-ai</module>
     </modules>
     <packaging>pom</packaging>
 

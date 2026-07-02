@@ -142,3 +142,22 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+# AI模型配置
+ai:
+  model:
+    # 提供商: dashscope(通义千问) / openai / deepseek / ollama
+    provider: dashscope
+    # 通义千问 API Key TODO：ai apikey
+    api-key:
+    # 模型名称: qwen-plus / qwen-plus-v2 / qwen-turbo / qwen-max / qwen3.7-plus
+    model-name: qwen3.7-plus
+    # 回复最大 Token 数
+    max-tokens: 2048
+    # 随机温度 0~2，越高越随机
+    temperature: 0.7
+    # 保留的历史消息条数（控制上下文窗口）
+    max-history-messages: 20
+    # 系统提示词
+    system-prompt: "你是一个专业、友好的医疗健康领域AI助手奶龙，请用中文回答用户的问题。"
+
