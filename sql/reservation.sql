@@ -94,37 +94,37 @@ CREATE TABLE `t_checkitem` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='检查项表';
 
 -- 血常规检查项
-INSERT INTO t_checkitem (code, name, sex, age, unit, normal_range, sort, create_by, create_time)
+INSERT INTO t_checkitem (code, name, sex, age, unit, normal_range, sort, created_by, create_time)
 VALUES ('XXC001', '白细胞', '2', '0+', '10^9/L', '3.5-9.5', 1, 'admin', NOW()),
        ('XXC002', '红细胞', '2', '0+', '10^12/L', '4.0-5.5', 2, 'admin', NOW()),
        ('XXC003', '血红蛋白', '2', '0+', 'g/L', '120-160', 3, 'admin', NOW()),
        ('XXC004', '血小板', '2', '0+', '10^9/L', '100-300', 4, 'admin', NOW());
 
 -- 血脂分析检查项
-INSERT INTO t_checkitem (code, name, sex, age, unit, normal_range, sort, create_by, create_time)
+INSERT INTO t_checkitem (code, name, sex, age, unit, normal_range, sort, created_by, create_time)
 VALUES ('ZXF001', '总胆固醇', '2', '18+', 'mmol/L', '3.1-5.7', 1, 'admin', NOW()),
        ('ZXF002', '甘油三酯', '2', '18+', 'mmol/L', '0.56-1.7', 2, 'admin', NOW()),
        ('ZXF003', '高密度脂蛋白', '2', '18+', 'mmol/L', '1.0-1.9', 3, 'admin', NOW()),
        ('ZXF004', '低密度脂蛋白', '2', '18+', 'mmol/L', '0-3.37', 4, 'admin', NOW());
 
 -- 肝功能检查项
-INSERT INTO t_checkitem (code, name, sex, age, unit, normal_range, sort, create_by, create_time)
+INSERT INTO t_checkitem (code, name, sex, age, unit, normal_range, sort, created_by, create_time)
 VALUES ('GHS001', '谷丙转氨酶', '2', '0+', 'U/L', '0-40', 1, 'admin', NOW()),
        ('GHS002', '谷草转氨酶', '2', '0+', 'U/L', '0-40', 2, 'admin', NOW()),
        ('GHS003', '总蛋白', '2', '0+', 'g/L', '65-85', 3, 'admin', NOW());
 
 -- 肾功能检查项
-INSERT INTO t_checkitem (code, name, sex, age, unit, normal_range, sort, create_by, create_time)
+INSERT INTO t_checkitem (code, name, sex, age, unit, normal_range, sort, created_by, create_time)
 VALUES ('SNH001', '肌酐', '2', '0+', 'umol/L', '57-97', 1, 'admin', NOW()),
        ('SNH002', '尿素氮', '2', '0+', 'mmol/L', '2.9-8.2', 2, 'admin', NOW()),
        ('SNH003', '尿酸', '2', '0+', 'umol/L', '208-428', 3, 'admin', NOW());
 
 -- 心电图检查项
-INSERT INTO t_checkitem (code, name, sex, age, unit, normal_range, sort, create_by, create_time)
+INSERT INTO t_checkitem (code, name, sex, age, unit, normal_range, sort, created_by, create_time)
 VALUES ('DXC001', '心电图', '2', '18+', '', '窦性心律', 1, 'admin', NOW());
 
 -- 腹部彩超检查项
-INSERT INTO t_checkitem (code, name, sex, age, unit, normal_range, sort, create_by, create_time)
+INSERT INTO t_checkitem (code, name, sex, age, unit, normal_range, sort, created_by, create_time)
 VALUES ('FBJ001', '肝胆胰脾彩超', '2', '0+', '', '未见明显异常', 1, 'admin', NOW());
 
 -- ----------------------------
