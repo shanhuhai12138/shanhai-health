@@ -1,6 +1,7 @@
 -- ----------------------------
 -- 心理测评模块建表
 -- ----------------------------
+use health;
 DROP TABLE IF EXISTS `assessment`;
 CREATE TABLE `assessment` (
   `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '量表ID',
