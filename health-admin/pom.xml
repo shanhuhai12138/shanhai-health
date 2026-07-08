@@ -68,6 +68,26 @@
             <groupId>com.health</groupId>
             <artifactId>health-system</artifactId>
         </dependency>
+        <!-- 心理测评模块 -->
+        <dependency>
+            <groupId>com.health</groupId>
+            <artifactId>health-assessment</artifactId>
+        </dependency>
+        <!-- 情绪追踪模块 -->
+        <dependency>
+            <groupId>com.health</groupId>
+            <artifactId>health-mood</artifactId>
+        </dependency>
+        <!-- 心理咨询模块 -->
+        <dependency>
+            <groupId>com.health</groupId>
+            <artifactId>health-counseling</artifactId>
+        </dependency>
+        <!-- 健康报告模块 -->
+        <dependency>
+            <groupId>com.health</groupId>
+            <artifactId>health-report</artifactId>
+        </dependency>
 
     </dependencies>
 

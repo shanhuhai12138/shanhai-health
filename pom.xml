@@ -183,6 +183,34 @@
                 <version>${health.version}</version>
             </dependency>
 
+            <!-- 心理测评 -->
+            <dependency>
+                <groupId>com.health</groupId>
+                <artifactId>health-assessment</artifactId>
+                <version>${health.version}</version>
+            </dependency>
+
+            <!-- 情绪追踪 -->
+            <dependency>
+                <groupId>com.health</groupId>
+                <artifactId>health-mood</artifactId>
+                <version>${health.version}</version>
+            </dependency>
+
+            <!-- 心理咨询 -->
+            <dependency>
+                <groupId>com.health</groupId>
+                <artifactId>health-counseling</artifactId>
+                <version>${health.version}</version>
+            </dependency>
+
+            <!-- 健康报告 -->
+            <dependency>
+                <groupId>com.health</groupId>
+                <artifactId>health-report</artifactId>
+                <version>${health.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -195,6 +223,10 @@
         <module>health-common</module>
         <module>health-reservation</module>
         <module>health-ai</module>
+        <module>health-assessment</module>
+        <module>health-mood</module>
+        <module>health-counseling</module>
+        <module>health-report</module>
     </modules>
     <packaging>pom</packaging>
 

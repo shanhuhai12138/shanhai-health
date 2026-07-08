@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.health.reservation.mapper.TReportMapper">
+
+    <resultMap type="TReport" id="TReportResult">
+        <result property="id"    column="id"    />
+        <result property="reportNo"    column="report_no"    />
+        <result property="memberName"    column="member_name"    />
+        <result property="memberPhone"    column="member_phone"    />
+        <result property="memberIdcard"    column="member_idcard"    />
+        <result property="memberSex"    column="member_sex"    />
+        <result property="memberAge"    column="member_age"    />
+        <result property="setmealId"    column="setmeal_id"    />
+        <result property="setmealName"    column="setmeal_name"    />
+        <result property="orderDate"    column="order_date"    />
+        <result property="reportStatus"    column="report_status"    />
+        <result property="doctorAdvice"    column="doctor_advice"    />
+        <result property="reviewerId"    column="reviewer_id"    />
+        <result property="reviewerName"    column="reviewer_name"    />
+        <result property="reviewTime"    column="review_time"    />
+        <result property="publisherId"    column="publisher_id"    />
+        <result property="publisherName"    column="publisher_name"    />
+        <result property="publishTime"    column="publish_time"    />
+        <result property="archivedTime"    column="archived_time"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTReportVo">
+        select id, report_no, member_name, member_phone, member_idcard, member_sex, member_age,
+               setmeal_id, setmeal_name, checkgroup_ids, order_date, report_status, doctor_advice,
+               reviewer_id, reviewer_name, review_time, publisher_id, publisher_name, publish_time,
+               archived_time, del_flag, create_by, create_time, update_by, update_time, remark
+        from t_report
+    </sql>
+
+    <select id="selectTReportList" parameterType="TReport" resultMap="TReportResult">
+        <include refid="selectTReportVo"/>
+        <where>
+            del_flag = '0'
+            <if test="reportNo != null  and reportNo != ''"> and report_no = #{reportNo}</if>
+            <if test="memberName != null  and memberName != ''"> and member_name like concat('%', #{memberName}, '%')</if>
+            <if test="memberPhone != null  and memberPhone != ''"> and member_phone = #{memberPhone}</if>
+            <if test="setmealId != null "> and setmeal_id = #{setmealId}</if>
+            <if test="setmealName != null  and setmealName != ''"> and setmeal_name like concat('%', #{setmealName}, '%')</if>
+            <if test="orderDate != null"> and order_date = #{orderDate}</if>
+            <if test="reportStatus != null  and reportStatus != ''"> and report_status = #{reportStatus}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectTReportById" parameterType="Long" resultMap="TReportResult">
+        <include refid="selectTReportVo"/>
+        where id = #{id} and del_flag = '0'
+    </select>
+
+    <select id="selectTReportByReportNo" parameterType="String" resultMap="TReportResult">
+        <include refid="selectTReportVo"/>
+        where report_no = #{reportNo} and del_flag = '0'
+    </select>
+
+    <select id="selectTReportByPhoneAndIdcard" resultMap="TReportResult">
+        <include refid="selectTReportVo"/>
+        where member_phone = #{phone}
+          and member_idcard = #{idcard}
+          and del_flag = '0'
+        order by create_time desc
+    </select>
+
+    <select id="selectMaxReportNoByDate" parameterType="String" resultType="String">
+        select report_no from t_report
+        where report_no like concat(#{dateStr}, '%')
+        order by report_no desc
+        limit 1
+    </select>
+
+    <insert id="insertTReport" parameterType="TReport" useGeneratedKeys="true" keyProperty="id">
+        insert into t_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reportNo != null and reportNo != ''">report_no,</if>
+            <if test="memberName != null">member_name,</if>
+            <if test="memberPhone != null">member_phone,</if>
+            <if test="memberIdcard != null">member_idcard,</if>
+            <if test="memberSex != null">member_sex,</if>
+            <if test="memberAge != null">member_age,</if>
+            <if test="setmealId != null">setmeal_id,</if>
+            <if test="setmealName != null">setmeal_name,</if>
+            <if test="checkgroupIds != null">checkgroup_ids,</if>
+            <if test="orderDate != null">order_date,</if>
+            <if test="reportStatus != null">report_status,</if>
+            <if test="doctorAdvice != null">doctor_advice,</if>
+            <if test="reviewerId != null">reviewer_id,</if>
+            <if test="reviewerName != null">reviewer_name,</if>
+            <if test="reviewTime != null">review_time,</if>
+            <if test="publisherId != null">publisher_id,</if>
+            <if test="publisherName != null">publisher_name,</if>
+            <if test="publishTime != null">publish_time,</if>
+            <if test="archivedTime != null">archived_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reportNo != null and reportNo != ''">#{reportNo},</if>
+            <if test="memberName != null">#{memberName},</if>
+            <if test="memberPhone != null">#{memberPhone},</if>
+            <if test="memberIdcard != null">#{memberIdcard},</if>
+            <if test="memberSex != null">#{memberSex},</if>
+            <if test="memberAge != null">#{memberAge},</if>
+            <if test="setmealId != null">#{setmealId},</if>
+            <if test="setmealName != null">#{setmealName},</if>
+            <if test="checkgroupIds != null">#{checkgroupIds},</if>
+            <if test="orderDate != null">#{orderDate},</if>
+            <if test="reportStatus != null">#{reportStatus},</if>
+            <if test="doctorAdvice != null">#{doctorAdvice},</if>
+            <if test="reviewerId != null">#{reviewerId},</if>
+            <if test="reviewerName != null">#{reviewerName},</if>
+            <if test="reviewTime != null">#{reviewTime},</if>
+            <if test="publisherId != null">#{publisherId},</if>
+            <if test="publisherName != null">#{publisherName},</if>
+            <if test="publishTime != null">#{publishTime},</if>
+            <if test="archivedTime != null">#{archivedTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTReport" parameterType="TReport">
+        update t_report
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="reportNo != null and reportNo != ''">report_no = #{reportNo},</if>
+            <if test="memberName != null">member_name = #{memberName},</if>
+            <if test="memberPhone != null">member_phone = #{memberPhone},</if>
+            <if test="memberIdcard != null">member_idcard = #{memberIdcard},</if>
+            <if test="memberSex != null">member_sex = #{memberSex},</if>
+            <if test="memberAge != null">member_age = #{memberAge},</if>
+            <if test="setmealId != null">setmeal_id = #{setmealId},</if>
+            <if test="setmealName != null">setmeal_name = #{setmealName},</if>
+            <if test="checkgroupIds != null">checkgroup_ids = #{checkgroupIds},</if>
+            <if test="orderDate != null">order_date = #{orderDate},</if>
+            <if test="reportStatus != null">report_status = #{reportStatus},</if>
+            <if test="doctorAdvice != null">doctor_advice = #{doctorAdvice},</if>
+            <if test="reviewerId != null">reviewer_id = #{reviewerId},</if>
+            <if test="reviewerName != null">reviewer_name = #{reviewerName},</if>
+            <if test="reviewTime != null">review_time = #{reviewTime},</if>
+            <if test="publisherId != null">publisher_id = #{publisherId},</if>
+            <if test="publisherName != null">publisher_name = #{publisherName},</if>
+            <if test="publishTime != null">publish_time = #{publishTime},</if>
+            <if test="archivedTime != null">archived_time = #{archivedTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateReportStatus">
+        update t_report set report_status = #{status}, update_time = NOW()
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTReportById" parameterType="Long">
+        update t_report set del_flag = '2' where id = #{id}
+    </delete>
+
+    <delete id="deleteTReportByIds" parameterType="String">
+        update t_report set del_flag = '2' where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

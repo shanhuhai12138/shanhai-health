@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.health.mood.mapper.MoodMapper">
+
+    <resultMap type="MoodRecord" id="MoodRecordResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="moodScore"    column="mood_score"    />
+        <result property="moodLabel"    column="mood_label"    />
+        <result property="moodEmoji"    column="mood_emoji"    />
+        <result property="energyLevel"    column="energy_level"    />
+        <result property="sleepHours"    column="sleep_hours"    />
+        <result property="exerciseMinutes"    column="exercise_minutes"    />
+        <result property="notes"    column="notes"    />
+        <result property="tags"    column="tags"    />
+        <result property="recordTime"    column="record_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectMoodRecordVo">
+        select id, user_id, mood_score, mood_label, mood_emoji, energy_level, sleep_hours, exercise_minutes, notes, tags, record_time, create_by, create_time, update_by, update_time, remark from mood_record
+    </sql>
+
+    <select id="selectMoodRecordList" parameterType="MoodRecord" resultMap="MoodRecordResult">
+        <include refid="selectMoodRecordVo"/>
+        <where>
+            <if test="userId != null"> and user_id = #{userId}</if>
+            <if test="moodLabel != null and moodLabel != ''"> and mood_label = #{moodLabel}</if>
+            <if test="recordTime != null"> and record_time = #{recordTime}</if>
+        </where>
+        order by record_time desc
+    </select>
+
+    <select id="selectMoodRecordById" parameterType="Long" resultMap="MoodRecordResult">
+        <include refid="selectMoodRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMoodRecord" parameterType="MoodRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into mood_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="moodScore != null">mood_score,</if>
+            <if test="moodLabel != null">mood_label,</if>
+            <if test="moodEmoji != null">mood_emoji,</if>
+            <if test="energyLevel != null">energy_level,</if>
+            <if test="sleepHours != null">sleep_hours,</if>
+            <if test="exerciseMinutes != null">exercise_minutes,</if>
+            <if test="notes != null">notes,</if>
+            <if test="tags != null">tags,</if>
+            <if test="recordTime != null">record_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="moodScore != null">#{moodScore},</if>
+            <if test="moodLabel != null">#{moodLabel},</if>
+            <if test="moodEmoji != null">#{moodEmoji},</if>
+            <if test="energyLevel != null">#{energyLevel},</if>
+            <if test="sleepHours != null">#{sleepHours},</if>
+            <if test="exerciseMinutes != null">#{exerciseMinutes},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="tags != null">#{tags},</if>
+            <if test="recordTime != null">#{recordTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateMoodRecord" parameterType="MoodRecord">
+        update mood_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="moodScore != null">mood_score = #{moodScore},</if>
+            <if test="moodLabel != null">mood_label = #{moodLabel},</if>
+            <if test="moodEmoji != null">mood_emoji = #{moodEmoji},</if>
+            <if test="energyLevel != null">energy_level = #{energyLevel},</if>
+            <if test="sleepHours != null">sleep_hours = #{sleepHours},</if>
+            <if test="exerciseMinutes != null">exercise_minutes = #{exerciseMinutes},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="tags != null">tags = #{tags},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMoodRecordById" parameterType="Long">
+        delete from mood_record where id = #{id}
+    </delete>
+
+    <delete id="deleteMoodRecordByIds" parameterType="Long">
+        delete from mood_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -149,7 +149,7 @@ ai:
     # 提供商: dashscope(通义千问) / openai / deepseek / ollama
     provider: dashscope
     # 通义千问 API Key TODO：ai apikey
-    api-key:
+    api-key: sk-ws-H.RXIXREM.UpJa.MEUCIAPV1uarLWPiz_YETvFb-w-OoVZn_tJDOcMF7JaOMKSZAiEA55rgfFjyuDN9YgmgTUbf56NgMYGezW6OpuipV2MlNg8
     # 模型名称: qwen-plus / qwen-plus-v2 / qwen-turbo / qwen-max / qwen3.7-plus
     model-name: qwen3.7-plus
     # 回复最大 Token 数

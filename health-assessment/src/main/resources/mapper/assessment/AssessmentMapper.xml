@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.health.assessment.mapper.AssessmentMapper">
+
+    <resultMap type="Assessment" id="AssessmentResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="description"    column="description"    />
+        <result property="totalScore"    column="total_score"    />
+        <result property="severityLevels"    column="severity_levels"    />
+        <result property="estimatedDuration"    column="estimated_duration"    />
+        <result property="category"    column="category"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <resultMap type="AssessmentQuestion" id="QuestionResult">
+        <result property="id"    column="id"    />
+        <result property="assessmentId"    column="assessment_id"    />
+        <result property="questionNo"    column="question_no"    />
+        <result property="questionText"    column="question_text"    />
+        <result property="questionType"    column="question_type"    />
+        <result property="options"    column="options"    />
+        <result property="reverseScore"    column="reverse_score"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <resultMap type="AssessmentResult" id="AssessmentResultMap">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="assessmentId"    column="assessment_id"    />
+        <result property="totalScore"    column="total_score"    />
+        <result property="severityLevel"    column="severity_level"    />
+        <result property="severityDesc"    column="severity_desc"    />
+        <result property="answers"    column="answers"    />
+        <result property="aiAnalysis"    column="ai_analysis"    />
+        <result property="aiSuggestion"    column="ai_suggestion"    />
+        <result property="durationSeconds"    column="duration_seconds"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectAssessmentVo">
+        select id, code, name, description, total_score, severity_levels, estimated_duration, category, status, create_by, create_time, update_by, update_time, remark from assessment
+    </sql>
+
+    <select id="selectAssessmentList" parameterType="Assessment" resultMap="AssessmentResult">
+        <include refid="selectAssessmentVo"/>
+        <where>
+            <if test="code != null and code != ''"> and code = #{code}</if>
+            <if test="name != null and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="category != null and category != ''"> and category = #{category}</if>
+        </where>
+        order by id
+    </select>
+
+    <select id="selectAssessmentById" parameterType="Long" resultMap="AssessmentResult">
+        <include refid="selectAssessmentVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectAssessmentByCode" parameterType="String" resultMap="AssessmentResult">
+        <include refid="selectAssessmentVo"/>
+        where code = #{code}
+    </select>
+
+    <insert id="insertAssessment" parameterType="Assessment" useGeneratedKeys="true" keyProperty="id">
+        insert into assessment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">code,</if>
+            <if test="name != null">name,</if>
+            <if test="description != null">description,</if>
+            <if test="totalScore != null">total_score,</if>
+            <if test="severityLevels != null">severity_levels,</if>
+            <if test="estimatedDuration != null">estimated_duration,</if>
+            <if test="category != null">category,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">#{code},</if>
+            <if test="name != null">#{name},</if>
+            <if test="description != null">#{description},</if>
+            <if test="totalScore != null">#{totalScore},</if>
+            <if test="severityLevels != null">#{severityLevels},</if>
+            <if test="estimatedDuration != null">#{estimatedDuration},</if>
+            <if test="category != null">#{category},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAssessment" parameterType="Assessment">
+        update assessment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="code != null">code = #{code},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="totalScore != null">total_score = #{totalScore},</if>
+            <if test="severityLevels != null">severity_levels = #{severityLevels},</if>
+            <if test="estimatedDuration != null">estimated_duration = #{estimatedDuration},</if>
+            <if test="category != null">category = #{category},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAssessmentById" parameterType="Long">
+        delete from assessment where id = #{id}
+    </delete>
+
+    <delete id="deleteAssessmentByIds" parameterType="Long">
+        delete from assessment where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectQuestionsByAssessmentId" parameterType="Long" resultMap="QuestionResult">
+        select id, assessment_id, question_no, question_text, question_type, options, reverse_score, sort_order, create_time
+        from assessment_question
+        where assessment_id = #{assessmentId}
+        order by question_no
+    </select>
+
+    <select id="selectResultsByUserId" parameterType="Long" resultMap="AssessmentResultMap">
+        select id, user_id, assessment_id, total_score, severity_level, severity_desc, answers, ai_analysis, ai_suggestion, duration_seconds, create_time
+        from assessment_result
+        where user_id = #{userId}
+        order by create_time desc
+    </select>
+
+    <select id="selectResultById" parameterType="Long" resultMap="AssessmentResultMap">
+        select id, user_id, assessment_id, total_score, severity_level, severity_desc, answers, ai_analysis, ai_suggestion, duration_seconds, create_time
+        from assessment_result
+        where id = #{id}
+    </select>
+
+    <insert id="insertResult" parameterType="AssessmentResult" useGeneratedKeys="true" keyProperty="id">
+        insert into assessment_result
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="assessmentId != null">assessment_id,</if>
+            <if test="totalScore != null">total_score,</if>
+            <if test="severityLevel != null">severity_level,</if>
+            <if test="severityDesc != null">severity_desc,</if>
+            <if test="answers != null">answers,</if>
+            <if test="aiAnalysis != null">ai_analysis,</if>
+            <if test="aiSuggestion != null">ai_suggestion,</if>
+            <if test="durationSeconds != null">duration_seconds,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="assessmentId != null">#{assessmentId},</if>
+            <if test="totalScore != null">#{totalScore},</if>
+            <if test="severityLevel != null">#{severityLevel},</if>
+            <if test="severityDesc != null">#{severityDesc},</if>
+            <if test="answers != null">#{answers},</if>
+            <if test="aiAnalysis != null">#{aiAnalysis},</if>
+            <if test="aiSuggestion != null">#{aiSuggestion},</if>
+            <if test="durationSeconds != null">#{durationSeconds},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+</mapper>

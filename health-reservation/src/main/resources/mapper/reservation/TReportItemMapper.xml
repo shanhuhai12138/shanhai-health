@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.health.reservation.mapper.TReportItemMapper">
+
+    <resultMap type="TReportItem" id="TReportItemResult">
+        <result property="id"    column="id"    />
+        <result property="reportId"    column="report_id"    />
+        <result property="checkitemId"    column="checkitem_id"    />
+        <result property="checkgroupId"    column="checkgroup_id"    />
+        <result property="checkitemName"    column="checkitem_name"    />
+        <result property="checkgroupName"    column="checkgroup_name"    />
+        <result property="result"    column="result"    />
+        <result property="unit"    column="unit"    />
+        <result property="normalRange"    column="normal_range"    />
+        <result property="abnormalFlag"    column="abnormal_flag"    />
+        <result property="abnormalMark"    column="abnormal_mark"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectTReportItemVo">
+        select id, report_id, checkitem_id, checkgroup_id, checkitem_name, checkgroup_name,
+               result, unit, normal_range, abnormal_flag, abnormal_mark, create_time
+        from t_report_item
+    </sql>
+
+    <select id="selectTReportItemList" parameterType="TReportItem" resultMap="TReportItemResult">
+        <include refid="selectTReportItemVo"/>
+        <where>
+            <if test="reportId != null"> and report_id = #{reportId}</if>
+            <if test="checkitemId != null"> and checkitem_id = #{checkitemId}</if>
+            <if test="checkgroupId != null"> and checkgroup_id = #{checkgroupId}</if>
+            <if test="abnormalFlag != null  and abnormalFlag != ''"> and abnormal_flag = #{abnormalFlag}</if>
+        </where>
+        order by create_time asc
+    </select>
+
+    <select id="selectTReportItemById" parameterType="Long" resultMap="TReportItemResult">
+        <include refid="selectTReportItemVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectTReportItemByReportId" parameterType="Long" resultMap="TReportItemResult">
+        <include refid="selectTReportItemVo"/>
+        where report_id = #{reportId}
+        order by create_time asc
+    </select>
+
+    <select id="selectTReportItemByReportIdWithDetail" parameterType="Long" resultMap="TReportItemResult">
+        SELECT
+            ri.id,
+            ri.report_id,
+            ri.checkitem_id,
+            ri.checkgroup_id,
+            ci.name AS checkitem_name,
+            cg.name AS checkgroup_name,
+            ri.result,
+            ci.unit AS unit,
+            ci.normal_range AS normal_range,
+            ri.abnormal_flag,
+            ri.abnormal_mark,
+            ri.create_time
+        FROM t_report_item ri
+        LEFT JOIN t_checkitem ci ON ri.checkitem_id = ci.id AND ci.del_flag = '0'
+        LEFT JOIN t_checkgroup cg ON ri.checkgroup_id = cg.id AND cg.del_flag = '0'
+        WHERE ri.report_id = #{reportId}
+        ORDER BY cg.sort ASC, ci.sort ASC
+    </select>
+
+    <insert id="insertTReportItem" parameterType="TReportItem" useGeneratedKeys="true" keyProperty="id">
+        insert into t_report_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reportId != null">report_id,</if>
+            <if test="checkitemId != null">checkitem_id,</if>
+            <if test="checkgroupId != null">checkgroup_id,</if>
+            <if test="checkitemName != null">checkitem_name,</if>
+            <if test="checkgroupName != null">checkgroup_name,</if>
+            <if test="result != null">result,</if>
+            <if test="unit != null">unit,</if>
+            <if test="normalRange != null">normal_range,</if>
+            <if test="abnormalFlag != null">abnormal_flag,</if>
+            <if test="abnormalMark != null">abnormal_mark,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reportId != null">#{reportId},</if>
+            <if test="checkitemId != null">#{checkitemId},</if>
+            <if test="checkgroupId != null">#{checkgroupId},</if>
+            <if test="checkitemName != null">#{checkitemName},</if>
+            <if test="checkgroupName != null">#{checkgroupName},</if>
+            <if test="result != null">#{result},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="normalRange != null">#{normalRange},</if>
+            <if test="abnormalFlag != null">#{abnormalFlag},</if>
+            <if test="abnormalMark != null">#{abnormalMark},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchInsertTReportItem">
+        insert into t_report_item (report_id, checkitem_id, checkgroup_id, checkitem_name,
+                                   checkgroup_name, result, unit, normal_range, abnormal_flag,
+                                   abnormal_mark, create_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.reportId}, #{item.checkitemId}, #{item.checkgroupId}, #{item.checkitemName},
+             #{item.checkgroupName}, #{item.result}, #{item.unit}, #{item.normalRange},
+             #{item.abnormalFlag}, #{item.abnormalMark}, #{item.createTime})
+        </foreach>
+    </insert>
+
+    <update id="updateTReportItem" parameterType="TReportItem">
+        update t_report_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="reportId != null">report_id = #{reportId},</if>
+            <if test="checkitemId != null">checkitem_id = #{checkitemId},</if>
+            <if test="checkgroupId != null">checkgroup_id = #{checkgroupId},</if>
+            <if test="checkitemName != null">checkitem_name = #{checkitemName},</if>
+            <if test="checkgroupName != null">checkgroup_name = #{checkgroupName},</if>
+            <if test="result != null">result = #{result},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="normalRange != null">normal_range = #{normalRange},</if>
+            <if test="abnormalFlag != null">abnormal_flag = #{abnormalFlag},</if>
+            <if test="abnormalMark != null">abnormal_mark = #{abnormalMark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTReportItemById" parameterType="Long">
+        delete from t_report_item where id = #{id}
+    </delete>
+
+    <delete id="deleteTReportItemByIds" parameterType="String">
+        delete from t_report_item where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteTReportItemByReportId" parameterType="Long">
+        delete from t_report_item where report_id = #{reportId}
+    </delete>
+
+</mapper>
