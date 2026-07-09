@@ -6,22 +6,22 @@
 -- ----------------------------
 -- 预约管理 - 一级菜单
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES (150, '预约管理', 0, 3, 'reservation', NULL, NULL, 1, 0, 'M', '0', '0', '', 'date-range', 'admin', NOW(), '', NULL, '预约管理菜单');
+INSERT INTO `sys_menu` VALUES (150, '预约管理', 0, 3, 'reservation', NULL, NULL, '', 1, 0, 'M', '0', '0', '', 'date-range', 'admin', NOW, '', NULL, '预约管理菜单');
 
 -- 预约设置
-INSERT INTO `sys_menu` VALUES (1501, '预约设置', 150, 1, 'ordersetting', 'reservation/ordersetting/index', NULL, 1, 0, 'C', '0', '0', 'reservation:ordersetting:list', 'calendar', 'admin', NOW(), '', NULL, '预约设置菜单');
+INSERT INTO `sys_menu` VALUES (1501, '预约设置', 150, 1, 'ordersetting', 'reservation/ordersetting/index', NULL, '', 1, 0, 'C', '0', '0', 'reservation:ordersetting:list', 'calendar', 'admin', NOW, '', NULL, '预约设置菜单');
 
 -- 检查项管理
-INSERT INTO `sys_menu` VALUES (1502, '检查项管理', 150, 2, 'checkitem', 'reservation/checkitem/index', NULL, 1, 0, 'C', '0', '0', 'reservation:checkitem:list', 'list', 'admin', NOW(), '', NULL, '检查项管理菜单');
+INSERT INTO `sys_menu` VALUES (1502, '检查项管理', 150, 2, 'checkitem', 'reservation/checkitem/index', NULL, '', 1, 0, 'C', '0', '0', 'reservation:checkitem:list', 'list', 'admin', NOW, '', NULL, '检查项管理菜单');
 
 -- 检查组管理
-INSERT INTO `sys_menu` VALUES (1503, '检查组管理', 150, 3, 'checkgroup', 'reservation/checkgroup/index', NULL, 1, 0, 'C', '0', '0', 'reservation:checkgroup:list', 'tree-table', 'admin', NOW(), '', NULL, '检查组管理菜单');
+INSERT INTO `sys_menu` VALUES (1503, '检查组管理', 150, 3, 'checkgroup', 'reservation/checkgroup/index', NULL, '', 1, 0, 'C', '0', '0', 'reservation:checkgroup:list', 'tree-table', 'admin', NOW, '', NULL, '检查组管理菜单');
 
 -- 体检套餐
-INSERT INTO `sys_menu` VALUES (1504, '体检套餐', 150, 4, 'setmeal', 'reservation/setmeal/index', NULL, 1, 0, 'C', '0', '0', 'reservation:setmeal:list', 'shopping', 'admin', NOW(), '', NULL, '体检套餐菜单');
+INSERT INTO `sys_menu` VALUES (1504, '体检套餐', 150, 4, 'setmeal', 'reservation/setmeal/index', NULL, '', 1, 0, 'C', '0', '0', 'reservation:setmeal:list', 'shopping', 'admin', NOW, '', NULL, '体检套餐菜单');
 
 -- 体检报告
-INSERT INTO `sys_menu` VALUES (1505, '体检报告', 150, 5, 'report', 'reservation/report/index', NULL, 1, 0, 'C', '0', '0', 'reservation:report:list', 'form', 'admin', NOW(), '', NULL, '体检报告菜单');
+INSERT INTO `sys_menu` VALUES (1505, '体检报告', 150, 5, 'report', 'reservation/report/index', NULL, '', 1, 0, 'C', '0', '0', 'reservation:report:list', 'form', 'admin', NOW, '', NULL, '体检报告菜单');
 
 -- 预约设置按钮
 INSERT INTO `sys_menu` VALUES (15011, '预约设置查询', 1501, 1, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:ordersetting:query', '#', 'admin', NOW(), '', NULL, '');
