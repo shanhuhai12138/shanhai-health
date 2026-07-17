@@ -122,9 +122,11 @@ public class AiChatServiceImpl implements IAiChatService
      *   6. 流式结束后持久化完整 AI 回复及 Token 消耗
      */
     @Override
-    public void chat(Long conversationId, String userInput, Long userId, SseEmitter emitter)
-    {
-        // 1. 鉴权：会话必须属于当前用户
+        public void chat(Long conversationId, String userInput, Long userId, SseEmitter emitter)
+        {
+            try
+            {
+            // 1. 鉴权：会话必须属于当前用户
         AiConversation conv = aiChatMapper.selectConversationById(conversationId, userId);
         if (conv == null)
         {
@@ -202,6 +204,13 @@ public class AiChatServiceImpl implements IAiChatService
                 emitter.completeWithError(error);
             }
         });
+        }
+        catch (Exception e)
+        {
+            log.error("AI 对话异常", e);
+            sendSse(emitter, "error", "AI 服务异常：" + e.getMessage());
+            emitter.completeWithError(e);
+        }
     }
 
     // ----------------------------------------------------------------

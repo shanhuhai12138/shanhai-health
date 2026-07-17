@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.health.reservation.mapper.AssessmentQuestionMapper">
+
+    <resultMap type="AssessmentQuestion" id="AssessmentQuestionResult">
+        <result property="id"    column="id"    />
+        <result property="assessmentId"    column="assessment_id"    />
+        <result property="questionNo"    column="question_no"    />
+        <result property="questionText"    column="question_text"    />
+        <result property="questionType"    column="question_type"    />
+        <result property="options"    column="options"    />
+        <result property="reverseScore"    column="reverse_score"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectAssessmentQuestionVo">
+        select id, assessment_id, question_no, question_text, question_type, options, reverse_score, sort_order, create_by, create_time, update_by, update_time, remark from assessment_question
+    </sql>
+
+    <select id="selectAssessmentQuestionList" parameterType="AssessmentQuestion" resultMap="AssessmentQuestionResult">
+        <include refid="selectAssessmentQuestionVo"/>
+        <where>
+            <if test="assessmentId != null"> and assessment_id = #{assessmentId}</if>
+        </where>
+        order by sort_order asc, question_no asc
+    </select>
+
+    <select id="selectAssessmentQuestionById" parameterType="Long" resultMap="AssessmentQuestionResult">
+        <include refid="selectAssessmentQuestionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertAssessmentQuestion" parameterType="AssessmentQuestion" useGeneratedKeys="true" keyProperty="id">
+        insert into assessment_question
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="assessmentId != null">assessment_id,</if>
+            <if test="questionNo != null">question_no,</if>
+            <if test="questionText != null">question_text,</if>
+            <if test="questionType != null">question_type,</if>
+            <if test="options != null">options,</if>
+            <if test="reverseScore != null">reverse_score,</if>
+            <if test="sortOrder != null">sort_order,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="assessmentId != null">#{assessmentId},</if>
+            <if test="questionNo != null">#{questionNo},</if>
+            <if test="questionText != null">#{questionText},</if>
+            <if test="questionType != null">#{questionType},</if>
+            <if test="options != null">#{options},</if>
+            <if test="reverseScore != null">#{reverseScore},</if>
+            <if test="sortOrder != null">#{sortOrder},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAssessmentQuestion" parameterType="AssessmentQuestion">
+        update assessment_question
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="assessmentId != null">assessment_id = #{assessmentId},</if>
+            <if test="questionNo != null">question_no = #{questionNo},</if>
+            <if test="questionText != null">question_text = #{questionText},</if>
+            <if test="questionType != null">question_type = #{questionType},</if>
+            <if test="options != null">options = #{options},</if>
+            <if test="reverseScore != null">reverse_score = #{reverseScore},</if>
+            <if test="sortOrder != null">sort_order = #{sortOrder},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAssessmentQuestionById" parameterType="Long">
+        delete from assessment_question where id = #{id}
+    </delete>
+
+    <delete id="deleteAssessmentQuestionByIds" parameterType="String">
+        delete from assessment_question where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

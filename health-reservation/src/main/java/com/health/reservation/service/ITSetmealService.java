@@ -1,6 +1,7 @@
 package com.health.reservation.service;
 
 import java.util.List;
+import com.health.reservation.domain.TCheckgroup;
 import com.health.reservation.domain.TSetmeal;
 
 /**
@@ -53,9 +54,34 @@ public interface ITSetmealService
 
     /**
      * 删除套餐组信息
-     * 
+     *
      * @param id 套餐组主键
      * @return 结果
      */
     public int deleteTSetmealById(Long id);
+
+    /**
+     * 查询套餐关联的检查组列表
+     *
+     * @param setmealId 套餐组主键
+     * @return 检查组集合
+     */
+    public List<TCheckgroup> selectTCheckgroupBySetmealId(Long setmealId);
+
+    /**
+     * 批量设置套餐关联的检查组
+     *
+     * @param setmealId 套餐组主键
+     * @param checkgroupIds 检查组主键数组
+     * @return 结果
+     */
+    public int batchSetCheckgroups(Long setmealId, Long[] checkgroupIds);
+
+    /**
+     * 查询套餐详情（含关联的检查组和检查项）
+     *
+     * @param setmealId 套餐组主键
+     * @return 套餐详情Map，包含setmeal、checkgroups（嵌套checkitems）
+     */
+    public java.util.Map<String, Object> selectSetmealDetail(Long setmealId);
 }

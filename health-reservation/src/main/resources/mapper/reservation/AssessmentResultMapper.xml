@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.health.reservation.mapper.AssessmentResultMapper">
+
+    <resultMap type="AssessmentResult" id="AssessmentResultResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="assessmentId"    column="assessment_id"    />
+        <result property="totalScore"    column="total_score"    />
+        <result property="severityLevel"    column="severity_level"    />
+        <result property="severityDesc"    column="severity_desc"    />
+        <result property="answers"    column="answers"    />
+        <result property="aiAnalysis"    column="ai_analysis"    />
+        <result property="aiSuggestion"    column="ai_suggestion"    />
+        <result property="durationSeconds"    column="duration_seconds"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="assessmentName"    column="assessmentName"    />
+        <result property="assessmentCode"    column="assessmentCode"    />
+    </resultMap>
+
+    <sql id="selectAssessmentResultVo">
+        select id, user_id, assessment_id, total_score, severity_level, severity_desc, answers, ai_analysis, ai_suggestion, duration_seconds, create_by, create_time, update_by, update_time, remark from assessment_result
+    </sql>
+
+    <select id="selectAssessmentResultList" parameterType="AssessmentResult" resultMap="AssessmentResultResult">
+        <include refid="selectAssessmentResultVo"/>
+        <where>
+            <if test="userId != null"> and user_id = #{userId}</if>
+            <if test="assessmentId != null"> and assessment_id = #{assessmentId}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectAssessmentResultById" parameterType="Long" resultMap="AssessmentResultResult">
+        <include refid="selectAssessmentResultVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertAssessmentResult" parameterType="AssessmentResult" useGeneratedKeys="true" keyProperty="id">
+        insert into assessment_result
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="assessmentId != null">assessment_id,</if>
+            <if test="totalScore != null">total_score,</if>
+            <if test="severityLevel != null">severity_level,</if>
+            <if test="severityDesc != null">severity_desc,</if>
+            <if test="answers != null">answers,</if>
+            <if test="aiAnalysis != null">ai_analysis,</if>
+            <if test="aiSuggestion != null">ai_suggestion,</if>
+            <if test="durationSeconds != null">duration_seconds,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="assessmentId != null">#{assessmentId},</if>
+            <if test="totalScore != null">#{totalScore},</if>
+            <if test="severityLevel != null">#{severityLevel},</if>
+            <if test="severityDesc != null">#{severityDesc},</if>
+            <if test="answers != null">#{answers},</if>
+            <if test="aiAnalysis != null">#{aiAnalysis},</if>
+            <if test="aiSuggestion != null">#{aiSuggestion},</if>
+            <if test="durationSeconds != null">#{durationSeconds},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAssessmentResult" parameterType="AssessmentResult">
+        update assessment_result
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="assessmentId != null">assessment_id = #{assessmentId},</if>
+            <if test="totalScore != null">total_score = #{totalScore},</if>
+            <if test="severityLevel != null">severity_level = #{severityLevel},</if>
+            <if test="severityDesc != null">severity_desc = #{severityDesc},</if>
+            <if test="answers != null">answers = #{answers},</if>
+            <if test="aiAnalysis != null">ai_analysis = #{aiAnalysis},</if>
+            <if test="aiSuggestion != null">ai_suggestion = #{aiSuggestion},</if>
+            <if test="durationSeconds != null">duration_seconds = #{durationSeconds},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAssessmentResultById" parameterType="Long">
+        delete from assessment_result where id = #{id}
+    </delete>
+
+    <delete id="deleteAssessmentResultByIds" parameterType="String">
+        delete from assessment_result where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectAssessmentHistoryWithNames" parameterType="Long" resultMap="AssessmentResultResult">
+        SELECT
+            r.id,
+            r.user_id,
+            r.assessment_id,
+            r.total_score,
+            r.severity_level,
+            r.severity_desc,
+            r.answers,
+            r.ai_analysis,
+            r.ai_suggestion,
+            r.duration_seconds,
+            r.create_by,
+            r.create_time,
+            r.update_by,
+            r.update_time,
+            r.remark,
+            a.name AS assessmentName,
+            a.code AS assessmentCode
+        FROM assessment_result r
+        LEFT JOIN assessment a ON r.assessment_id = a.id
+        WHERE r.user_id = #{userId}
+        ORDER BY r.create_time DESC
+    </select>
+</mapper>

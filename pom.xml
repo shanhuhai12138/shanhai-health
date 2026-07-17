@@ -16,7 +16,7 @@
         <health.version>3.9.2</health.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <spring-boot.version>3.5.14</spring-boot.version>
         <mybatis-spring-boot.version>3.0.5</mybatis-spring-boot.version>
         <druid.version>1.2.28</druid.version>
@@ -183,34 +183,6 @@
                 <version>${health.version}</version>
             </dependency>
 
-            <!-- 心理测评 -->
-            <dependency>
-                <groupId>com.health</groupId>
-                <artifactId>health-assessment</artifactId>
-                <version>${health.version}</version>
-            </dependency>
-
-            <!-- 情绪追踪 -->
-            <dependency>
-                <groupId>com.health</groupId>
-                <artifactId>health-mood</artifactId>
-                <version>${health.version}</version>
-            </dependency>
-
-            <!-- 心理咨询 -->
-            <dependency>
-                <groupId>com.health</groupId>
-                <artifactId>health-counseling</artifactId>
-                <version>${health.version}</version>
-            </dependency>
-
-            <!-- 健康报告 -->
-            <dependency>
-                <groupId>com.health</groupId>
-                <artifactId>health-report</artifactId>
-                <version>${health.version}</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -223,10 +195,6 @@
         <module>health-common</module>
         <module>health-reservation</module>
         <module>health-ai</module>
-        <module>health-assessment</module>
-        <module>health-mood</module>
-        <module>health-counseling</module>
-        <module>health-report</module>
     </modules>
     <packaging>pom</packaging>
 

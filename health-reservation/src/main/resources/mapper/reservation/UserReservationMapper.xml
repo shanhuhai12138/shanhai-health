@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.health.reservation.mapper.UserReservationMapper">
+
+    <!-- 查询可预约套餐列表（已上架） -->
+    <select id="selectAvailableSetmeals" resultType="com.health.reservation.domain.TSetmeal">
+        SELECT id, name, code, help_code, sex, age, price, attention, img, create_time
+        FROM t_setmeal
+        WHERE del_flag = '0'
+        ORDER BY price ASC
+    </select>
+
+    <!-- 查询套餐关联的检查组ID列表 -->
+    <select id="selectCheckgroupIdsBySetmealId" resultType="java.lang.Long">
+        SELECT checkgroup_id
+        FROM t_setmeal_checkgroup
+        WHERE setmeal_id = #{setmealId}
+    </select>
+
+    <!-- 查询检查组关联的检查项ID列表 -->
+    <select id="selectCheckitemIdsByCheckgroupId" resultType="java.lang.Long">
+        SELECT checkitem_id
+        FROM t_checkgroup_checkitem
+        WHERE checkgroup_id = #{checkgroupId}
+    </select>
+
+    <!-- 查询可预约日期列表（有预约设置且有余量的日期） -->
+    <select id="selectAvailableDates" resultType="java.util.HashMap">
+        SELECT
+            DATE_FORMAT(order_date, '%Y-%m-%d') AS date,
+            number,
+            reservations,
+            (number - reservations) AS availableCount
+        FROM t_ordersetting
+        WHERE order_date >= CURDATE()
+          AND reservations &lt; number
+        ORDER BY order_date ASC
+    </select>
+
+    <!-- 查询指定日期的预约设置 -->
+    <select id="selectOrdersettingByDate" parameterType="java.util.Date" resultMap="TOrdersettingResult">
+        SELECT id, order_date, number, reservations
+        FROM t_ordersetting
+        WHERE order_date = #{orderDate}
+    </select>
+
+    <resultMap type="TOrdersetting" id="TOrdersettingResult">
+        <result property="id" column="id"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="number" column="number"/>
+        <result property="reservations" column="reservations"/>
+    </resultMap>
+
+    <!-- 乐观锁扣减库存：增加已预约数 -->
+    <update id="increaseReservations">
+        UPDATE t_ordersetting
+        SET reservations = reservations + 1, update_time = NOW()
+        WHERE order_date = #{orderDate}
+          AND reservations &lt; number
+    </update>
+
+    <!-- 乐观锁释放库存：减少已预约数 -->
+    <update id="decreaseReservations">
+        UPDATE t_ordersetting
+        SET reservations = reservations - 1, update_time = NOW()
+        WHERE order_date = #{orderDate}
+          AND reservations > 0
+    </update>
+
+</mapper>

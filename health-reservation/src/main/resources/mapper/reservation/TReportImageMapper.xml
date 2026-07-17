@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.health.reservation.mapper.TReportImageMapper">
+
+    <resultMap type="TReportImage" id="TReportImageResult">
+        <result property="id"    column="id"    />
+        <result property="reportId"    column="report_id"    />
+        <result property="checkitemId"    column="checkitem_id"    />
+        <result property="imagePath"    column="image_path"    />
+        <result property="imageDesc"    column="image_desc"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTReportImageVo">
+        select id, report_id, checkitem_id, image_path, image_desc, create_by, create_time, update_by, update_time, remark from t_report_image
+    </sql>
+
+    <select id="selectTReportImageList" parameterType="TReportImage" resultMap="TReportImageResult">
+        <include refid="selectTReportImageVo"/>
+        <where>
+            <if test="reportId != null "> and report_id = #{reportId}</if>
+            <if test="checkitemId != null "> and checkitem_id = #{checkitemId}</if>
+            <if test="imagePath != null  and imagePath != ''"> and image_path = #{imagePath}</if>
+            <if test="imageDesc != null  and imageDesc != ''"> and image_desc like concat('%', #{imageDesc}, '%')</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectTReportImageById" parameterType="Long" resultMap="TReportImageResult">
+        <include refid="selectTReportImageVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectTReportImageByReportId" parameterType="Long" resultMap="TReportImageResult">
+        <include refid="selectTReportImageVo"/>
+        where report_id = #{reportId}
+        order by create_time asc
+    </select>
+
+    <insert id="insertTReportImage" parameterType="TReportImage" useGeneratedKeys="true" keyProperty="id">
+        insert into t_report_image
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reportId != null">report_id,</if>
+            <if test="checkitemId != null">checkitem_id,</if>
+            <if test="imagePath != null">image_path,</if>
+            <if test="imageDesc != null">image_desc,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reportId != null">#{reportId},</if>
+            <if test="checkitemId != null">#{checkitemId},</if>
+            <if test="imagePath != null">#{imagePath},</if>
+            <if test="imageDesc != null">#{imageDesc},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTReportImage" parameterType="TReportImage">
+        update t_report_image
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="reportId != null">report_id = #{reportId},</if>
+            <if test="checkitemId != null">checkitem_id = #{checkitemId},</if>
+            <if test="imagePath != null">image_path = #{imagePath},</if>
+            <if test="imageDesc != null">image_desc = #{imageDesc},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTReportImageById" parameterType="Long">
+        delete from t_report_image where id = #{id}
+    </delete>
+
+    <delete id="deleteTReportImageByIds" parameterType="String">
+        delete from t_report_image where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

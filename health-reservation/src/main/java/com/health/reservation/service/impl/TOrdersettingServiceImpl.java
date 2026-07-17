@@ -203,4 +203,26 @@ public class TOrdersettingServiceImpl implements ITOrdersettingService
         // 返回详细统计信息
         return AjaxResult.success("导入完成，共处理 " + list.size() + " 条，新增 " + insertList.size() + " 条，更新 " + updateList.size() + " 条，跳过 " + skipCount + " 条");
     }
+
+    /**
+     * 按日期编辑可预约人数
+     */
+    @Override
+    public int editNumberByOrderDate(TOrdersetting tOrdersetting)
+    {
+        // 先查询是否已存在该日期的记录
+        TOrdersetting existing = tOrdersettingMapper.selectByOrderDate(tOrdersetting.getOrderDate());
+        if (existing != null)
+        {
+            // 存在：更新 number
+            existing.setNumber(tOrdersetting.getNumber());
+            return tOrdersettingMapper.updateTOrdersetting(existing);
+        }
+        else
+        {
+            // 不存在：新增
+            tOrdersetting.setNumber(tOrdersetting.getNumber());
+            return tOrdersettingMapper.insertTOrdersetting(tOrdersetting);
+        }
+    }
 }

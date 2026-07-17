@@ -69,10 +69,21 @@ public class TOrdersettingController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('reservation:ordersetting:add')")
     @Log(title = "预约设置", businessType = BusinessType.INSERT)
-    @PostMapping
+    @PostMapping("/add")
     public AjaxResult add(@RequestBody TOrdersetting tOrdersetting)
     {
         return toAjax(tOrdersettingService.insertTOrdersetting(tOrdersetting));
+    }
+
+    /**
+     * 修改预约设置
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:ordersetting:edit')")
+    @Log(title = "预约设置", businessType = BusinessType.UPDATE)
+    @PutMapping("/editNumberByOrderDate")
+    public AjaxResult editNumberByOrderDate(@RequestBody TOrdersetting tOrdersetting)
+    {
+        return toAjax(tOrdersettingService.editNumberByOrderDate(tOrdersetting));
     }
 
     /**

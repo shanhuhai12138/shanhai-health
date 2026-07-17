@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.health.reservation.mapper.HealthReportMapper">
+
+    <resultMap type="HealthReport" id="HealthReportResult">
+        <result property="id"    column="id"    />
+        <result property="reportNo"    column="report_no"    />
+        <result property="userId"    column="user_id"    />
+        <result property="reportType"    column="report_type"    />
+        <result property="assessmentScores"    column="assessment_scores"    />
+        <result property="moodSummary"    column="mood_summary"    />
+        <result property="aiAnalysis"    column="ai_analysis"    />
+        <result property="aiRecommendations"    column="ai_recommendations"    />
+        <result property="reportStatus"    column="report_status"    />
+        <result property="generateTime"    column="generate_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectHealthReportVo">
+        select id, report_no, user_id, report_type, assessment_scores, mood_summary, ai_analysis, ai_recommendations, report_status, generate_time, create_by, create_time, update_by, update_time, remark from health_report
+    </sql>
+
+    <select id="selectHealthReportList" parameterType="HealthReport" resultMap="HealthReportResult">
+        <include refid="selectHealthReportVo"/>
+        <where>
+            <if test="userId != null"> and user_id = #{userId}</if>
+            <if test="reportType != null  and reportType != ''"> and report_type = #{reportType}</if>
+            <if test="reportStatus != null  and reportStatus != ''"> and report_status = #{reportStatus}</if>
+        </where>
+        order by generate_time desc
+    </select>
+
+    <select id="selectHealthReportById" parameterType="Long" resultMap="HealthReportResult">
+        <include refid="selectHealthReportVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertHealthReport" parameterType="HealthReport" useGeneratedKeys="true" keyProperty="id">
+        insert into health_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reportNo != null">report_no,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="reportType != null">report_type,</if>
+            <if test="assessmentScores != null">assessment_scores,</if>
+            <if test="moodSummary != null">mood_summary,</if>
+            <if test="aiAnalysis != null">ai_analysis,</if>
+            <if test="aiRecommendations != null">ai_recommendations,</if>
+            <if test="reportStatus != null">report_status,</if>
+            <if test="generateTime != null">generate_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reportNo != null">#{reportNo},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="reportType != null">#{reportType},</if>
+            <if test="assessmentScores != null">#{assessmentScores},</if>
+            <if test="moodSummary != null">#{moodSummary},</if>
+            <if test="aiAnalysis != null">#{aiAnalysis},</if>
+            <if test="aiRecommendations != null">#{aiRecommendations},</if>
+            <if test="reportStatus != null">#{reportStatus},</if>
+            <if test="generateTime != null">#{generateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHealthReport" parameterType="HealthReport">
+        update health_report
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="reportNo != null">report_no = #{reportNo},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="reportType != null">report_type = #{reportType},</if>
+            <if test="assessmentScores != null">assessment_scores = #{assessmentScores},</if>
+            <if test="moodSummary != null">mood_summary = #{moodSummary},</if>
+            <if test="aiAnalysis != null">ai_analysis = #{aiAnalysis},</if>
+            <if test="aiRecommendations != null">ai_recommendations = #{aiRecommendations},</if>
+            <if test="reportStatus != null">report_status = #{reportStatus},</if>
+            <if test="generateTime != null">generate_time = #{generateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHealthReportById" parameterType="Long">
+        delete from health_report where id = #{id}
+    </delete>
+
+    <delete id="deleteHealthReportByIds" parameterType="String">
+        delete from health_report where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

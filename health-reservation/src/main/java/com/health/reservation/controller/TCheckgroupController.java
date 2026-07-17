@@ -101,4 +101,15 @@ public class TCheckgroupController extends BaseController
     {
         return toAjax(tCheckgroupService.deleteTCheckgroupByIds(ids));
     }
+
+    /**
+     * 查询所有检查组列表（不分页）
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:checkgroup:list')")
+    @GetMapping("/all")
+    public AjaxResult listAll()
+    {
+        List<TCheckgroup> list = tCheckgroupService.selectTCheckgroupList(new TCheckgroup());
+        return success(list);
+    }
 }

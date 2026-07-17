@@ -93,4 +93,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="selectTCheckgroupByIds" parameterType="Long" resultMap="TCheckgroupResult">
+        <include refid="selectTCheckgroupVo"/>
+        where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

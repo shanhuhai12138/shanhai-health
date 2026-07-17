@@ -77,4 +77,12 @@ public interface ITOrdersettingService
      * @return 导入结果信息
      */
     public AjaxResult importOrderSetting(MultipartFile file) throws Exception;
+
+    /**
+     * 按日期编辑可预约人数
+     *
+     * @param tOrdersetting 预约设置
+     * @return 结果
+     */
+    public int editNumberByOrderDate(TOrdersetting tOrdersetting);
 }

@@ -1,6 +1,7 @@
 package com.health.reservation.controller;
 
 import java.util.List;
+import java.util.Map;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.health.common.core.controller.BaseController;
 import com.health.common.core.domain.AjaxResult;
 import com.health.common.enums.BusinessType;
 import com.health.reservation.domain.TSetmeal;
+import com.health.reservation.domain.TCheckgroup;
 import com.health.reservation.service.ITSetmealService;
 import com.health.common.utils.poi.ExcelUtil;
 import com.health.common.core.page.TableDataInfo;
@@ -100,5 +102,56 @@ public class TSetmealController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(tSetmealService.deleteTSetmealByIds(ids));
+    }
+
+    /**
+     * 查询套餐关联的检查组列表
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:setmeal:query')")
+    @GetMapping("/checkgroups/{setmealId}")
+    public TableDataInfo listCheckgroups(@PathVariable("setmealId") Long setmealId)
+    {
+        List<TCheckgroup> list = tSetmealService.selectTCheckgroupBySetmealId(setmealId);
+        return getDataTable(list);
+    }
+
+    /**
+     * 批量设置套餐关联的检查组
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:setmeal:edit')")
+    @Log(title = "套餐组", businessType = BusinessType.UPDATE)
+    @PutMapping("/checkgroups/batch")
+    public AjaxResult batchSetCheckgroups(@RequestBody Map<String, Object> params)
+    {
+        Long setmealId = Long.valueOf(params.get("setmealId").toString());
+        @SuppressWarnings("unchecked")
+        List<Long> checkgroupIdList = (List<Long>) params.get("checkgroupIds");
+        Long[] checkgroupIds = checkgroupIdList != null ? checkgroupIdList.toArray(new Long[0]) : new Long[0];
+        return toAjax(tSetmealService.batchSetCheckgroups(setmealId, checkgroupIds));
+    }
+
+    /**
+     * 查询套餐详情（含关联的检查组和检查项）
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:setmeal:query')")
+    @GetMapping("/details/{setmealId}")
+    public AjaxResult getDetail(@PathVariable("setmealId") Long setmealId)
+    {
+        return success(tSetmealService.selectSetmealDetail(setmealId));
+    }
+
+    /**
+     * 查询套餐及其关联的检查组（扁平化列表）
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:setmeal:query')")
+    @GetMapping("/{id}/withCheckgroups")
+    public AjaxResult getWithCheckgroups(@PathVariable("id") Long id)
+    {
+        java.util.Map<String, Object> result = new java.util.HashMap<>();
+        TSetmeal setmeal = tSetmealService.selectTSetmealById(id);
+        List<TCheckgroup> checkgroups = tSetmealService.selectTCheckgroupBySetmealId(id);
+        result.put("setmeal", setmeal);
+        result.put("checkgroups", checkgroups);
+        return success(result);
     }
 }

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.health.reservation.mapper.NotificationMapper">
+
+    <resultMap type="Notification" id="NotificationResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="messageType"    column="message_type"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="isRead"    column="is_read"    />
+        <result property="relatedId"    column="related_id"    />
+        <result property="relatedType"    column="related_type"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectNotificationVo">
+        select id, user_id, message_type, title, content, is_read, related_id, related_type, create_time from sys_message
+    </sql>
+
+    <select id="selectNotificationList" parameterType="Notification" resultMap="NotificationResult">
+        <include refid="selectNotificationVo"/>
+        <where>
+            <if test="userId != null"> and user_id = #{userId}</if>
+            <if test="isRead != null  and isRead != ''"> and is_read = #{isRead}</if>
+            <if test="messageType != null  and messageType != ''"> and message_type = #{messageType}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectNotificationById" parameterType="Long" resultMap="NotificationResult">
+        <include refid="selectNotificationVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectUnreadCount" parameterType="Long" resultType="int">
+        select count(*) from sys_message where user_id = #{userId} and is_read = '0'
+    </select>
+
+    <insert id="insertNotification" parameterType="Notification" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="messageType != null">message_type,</if>
+            <if test="title != null">title,</if>
+            <if test="content != null">content,</if>
+            <if test="isRead != null">is_read,</if>
+            <if test="relatedId != null">related_id,</if>
+            <if test="relatedType != null">related_type,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="messageType != null">#{messageType},</if>
+            <if test="title != null">#{title},</if>
+            <if test="content != null">#{content},</if>
+            <if test="isRead != null">#{isRead},</if>
+            <if test="relatedId != null">#{relatedId},</if>
+            <if test="relatedType != null">#{relatedType},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateNotification" parameterType="Notification">
+        update sys_message
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="messageType != null">message_type = #{messageType},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="isRead != null">is_read = #{isRead},</if>
+            <if test="relatedId != null">related_id = #{relatedId},</if>
+            <if test="relatedType != null">related_type = #{relatedType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateReadStatus" parameterType="Long">
+        update sys_message set is_read = '1' where id = #{id}
+    </update>
+
+    <update id="updateReadStatusByUserId" parameterType="Long">
+        update sys_message set is_read = '1' where user_id = #{userId} and is_read = '0'
+    </update>
+
+    <delete id="deleteNotificationById" parameterType="Long">
+        delete from sys_message where id = #{id}
+    </delete>
+
+    <delete id="deleteNotificationByIds" parameterType="String">
+        delete from sys_message where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

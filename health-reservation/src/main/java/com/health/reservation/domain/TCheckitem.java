@@ -46,7 +46,49 @@ public class TCheckitem extends BaseEntity
     @Excel(name = "注意事项")
     private String attention;
 
-    public void setId(Long id) 
+    /** 检查科室 */
+    @Excel(name = "检查科室")
+    private String checkDept;
+
+    /** 助记码 */
+    @Excel(name = "助记码")
+    private String helpCode;
+
+    /** 检查类别 */
+    @Excel(name = "检查类别")
+    private String cate;
+
+    /** 关联检查组ID */
+    private Long checkgroupId;
+
+    /** 注意事项（简版） */
+    @Excel(name = "注意事项")
+    private String notice;
+
+    /** 检查摘要 */
+    @Excel(name = "检查摘要")
+    private String abstractInfo;
+
+    /** 是否加项（0否 1是） */
+    @Excel(name = "是否加项", readConverterExp = "0=否,1=是")
+    private String isAddin;
+
+    /** 排序 */
+    @Excel(name = "排序")
+    private Integer sort;
+
+    /** 删除标志（0代表存在 2代表删除） */
+    private String delFlag;
+
+    /** 单位 */
+    @Excel(name = "单位")
+    private String unit;
+
+    /** 参考范围 */
+    @Excel(name = "参考范围")
+    private String normalRange;
+
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -125,6 +167,115 @@ public class TCheckitem extends BaseEntity
     {
         return attention;
     }
+    public void setCheckDept(String checkDept)
+    {
+        this.checkDept = checkDept;
+    }
+
+    public String getCheckDept()
+    {
+        return checkDept;
+    }
+
+    public void setHelpCode(String helpCode)
+    {
+        this.helpCode = helpCode;
+    }
+
+    public String getHelpCode()
+    {
+        return helpCode;
+    }
+
+    public void setCate(String cate)
+    {
+        this.cate = cate;
+    }
+
+    public String getCate()
+    {
+        return cate;
+    }
+
+    public void setCheckgroupId(Long checkgroupId)
+    {
+        this.checkgroupId = checkgroupId;
+    }
+
+    public Long getCheckgroupId()
+    {
+        return checkgroupId;
+    }
+
+    public void setNotice(String notice)
+    {
+        this.notice = notice;
+    }
+
+    public String getNotice()
+    {
+        return notice;
+    }
+
+    public void setAbstractInfo(String abstractInfo)
+    {
+        this.abstractInfo = abstractInfo;
+    }
+
+    public String getAbstractInfo()
+    {
+        return abstractInfo;
+    }
+
+    public void setIsAddin(String isAddin)
+    {
+        this.isAddin = isAddin;
+    }
+
+    public String getIsAddin()
+    {
+        return isAddin;
+    }
+
+    public void setSort(Integer sort)
+    {
+        this.sort = sort;
+    }
+
+    public Integer getSort()
+    {
+        return sort;
+    }
+
+    public void setDelFlag(String delFlag)
+    {
+        this.delFlag = delFlag;
+    }
+
+    public String getDelFlag()
+    {
+        return delFlag;
+    }
+
+    public void setUnit(String unit)
+    {
+        this.unit = unit;
+    }
+
+    public String getUnit()
+    {
+        return unit;
+    }
+
+    public void setNormalRange(String normalRange)
+    {
+        this.normalRange = normalRange;
+    }
+
+    public String getNormalRange()
+    {
+        return normalRange;
+    }
 
     @Override
     public String toString() {
@@ -137,6 +288,17 @@ public class TCheckitem extends BaseEntity
             .append("price", getPrice())
             .append("type", getType())
             .append("attention", getAttention())
+            .append("checkDept", getCheckDept())
+            .append("helpCode", getHelpCode())
+            .append("cate", getCate())
+            .append("checkgroupId", getCheckgroupId())
+            .append("notice", getNotice())
+            .append("abstractInfo", getAbstractInfo())
+            .append("isAddin", getIsAddin())
+            .append("sort", getSort())
+            .append("delFlag", getDelFlag())
+            .append("unit", getUnit())
+            .append("normalRange", getNormalRange())
             .append("remark", getRemark())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
@@ -145,3 +307,4 @@ public class TCheckitem extends BaseEntity
             .toString();
     }
 }
+

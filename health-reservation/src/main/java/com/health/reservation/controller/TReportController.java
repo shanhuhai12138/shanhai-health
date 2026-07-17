@@ -18,6 +18,8 @@ import com.health.reservation.service.ITReportService;
 import com.health.common.core.page.TableDataInfo;
 import com.health.common.utils.poi.ExcelUtil;
 import com.health.reservation.vo.ReportDetailVO;
+import com.health.reservation.domain.TReportImage;
+import com.health.reservation.service.ITReportImageService;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -34,6 +36,9 @@ public class TReportController extends BaseController
 {
     @Autowired
     private ITReportService tReportService;
+
+    @Autowired
+    private ITReportImageService tReportImageService;
 
     /**
      * 查询体检报告列表
@@ -148,6 +153,76 @@ public class TReportController extends BaseController
     public AjaxResult archive(@PathVariable("id") Long id)
     {
         return toAjax(tReportService.archiveReport(id));
+    }
+
+    /**
+     * 下载体检报告导入模板
+     */
+    // ========== 体检报告图像 CRUD ==========
+
+    /**
+     * 查询图像列表
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:report:image:list')")
+    @GetMapping("/image/list")
+    public TableDataInfo imageList(TReportImage tReportImage)
+    {
+        startPage();
+        List<TReportImage> list = tReportImageService.selectTReportImageList(tReportImage);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询图像详情
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:report:image:query')")
+    @GetMapping(value = "/image/{id}")
+    public AjaxResult getImage(@PathVariable("id") Long id)
+    {
+        return success(tReportImageService.selectTReportImageById(id));
+    }
+
+    /**
+     * 根据报告ID查询图像列表
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:report:image:query')")
+    @GetMapping("/image/report/{reportId}")
+    public AjaxResult getImagesByReportId(@PathVariable("reportId") Long reportId)
+    {
+        return success(tReportImageService.selectTReportImageByReportId(reportId));
+    }
+
+    /**
+     * 新增图像
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:report:image:add')")
+    @Log(title = "体检报告图像", businessType = BusinessType.INSERT)
+    @PostMapping("/image")
+    public AjaxResult addImage(@RequestBody TReportImage tReportImage)
+    {
+        return toAjax(tReportImageService.insertTReportImage(tReportImage));
+    }
+
+    /**
+     * 修改图像
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:report:image:edit')")
+    @Log(title = "体检报告图像", businessType = BusinessType.UPDATE)
+    @PutMapping("/image")
+    public AjaxResult editImage(@RequestBody TReportImage tReportImage)
+    {
+        return toAjax(tReportImageService.updateTReportImage(tReportImage));
+    }
+
+    /**
+     * 删除图像
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:report:image:remove')")
+    @Log(title = "体检报告图像", businessType = BusinessType.DELETE)
+    @DeleteMapping("/image/{ids}")
+    public AjaxResult removeImage(@PathVariable Long[] ids)
+    {
+        return toAjax(tReportImageService.deleteTReportImageByIds(ids));
     }
 
     /**

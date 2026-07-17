@@ -53,9 +53,17 @@ public interface TCheckgroupMapper
 
     /**
      * 批量删除检查组管理
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
     public int deleteTCheckgroupByIds(Long[] ids);
+
+    /**
+     * 根据ID列表查询检查组
+     *
+     * @param ids 检查组主键集合
+     * @return 检查组集合
+     */
+    public List<TCheckgroup> selectTCheckgroupByIds(Long[] ids);
 }

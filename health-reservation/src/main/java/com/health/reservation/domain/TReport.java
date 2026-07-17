@@ -54,9 +54,9 @@ public class TReport extends BaseEntity
     @Excel(name = "套餐名称")
     private String setmealName;
 
-    /** 关联检查组ID列表（非数据库字段，用于前端回显） */
+    /** 关联检查组ID列表（逗号分隔字符串，对应DB列checkgroup_ids） */
     @JsonIgnore
-    private Long[] checkgroupIds;
+    private String checkgroupIds;
 
     /** 体检日期 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -208,12 +208,12 @@ public class TReport extends BaseEntity
         return setmealName;
     }
 
-    public void setCheckgroupIds(Long[] checkgroupIds)
+    public void setCheckgroupIds(String checkgroupIds)
     {
         this.checkgroupIds = checkgroupIds;
     }
 
-    public Long[] getCheckgroupIds()
+    public String getCheckgroupIds()
     {
         return checkgroupIds;
     }

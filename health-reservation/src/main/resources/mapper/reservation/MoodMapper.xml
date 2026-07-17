@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.health.reservation.mapper.MoodMapper">
+
+    <resultMap type="MoodRecord" id="MoodRecordResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="moodScore"    column="mood_score"    />
+        <result property="moodLabel"    column="mood_label"    />
+        <result property="moodEmoji"    column="mood_emoji"    />
+        <result property="energyLevel"    column="energy_level"    />
+        <result property="sleepHours"    column="sleep_hours"    />
+        <result property="exerciseMinutes"    column="exercise_minutes"    />
+        <result property="notes"    column="notes"    />
+        <result property="tags"    column="tags"    />
+        <result property="recordTime"    column="record_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectMoodRecordVo">
+        select id, user_id, mood_score, mood_label, mood_emoji, energy_level, sleep_hours, exercise_minutes, notes, tags, record_time, create_by, create_time, update_by, update_time, remark from mood_record
+    </sql>
+
+    <select id="selectMoodRecordList" parameterType="MoodRecord" resultMap="MoodRecordResult">
+        <include refid="selectMoodRecordVo"/>
+        <where>
+            <if test="userId != null"> and user_id = #{userId}</if>
+            <if test="moodLabel != null  and moodLabel != ''"> and mood_label = #{moodLabel}</if>
+            <if test="recordTime != null"> and record_time = #{recordTime}</if>
+        </where>
+        order by record_time desc
+    </select>
+
+    <select id="selectMoodRecordById" parameterType="Long" resultMap="MoodRecordResult">
+        <include refid="selectMoodRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMoodRecord" parameterType="MoodRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into mood_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="moodScore != null">mood_score,</if>
+            <if test="moodLabel != null">mood_label,</if>
+            <if test="moodEmoji != null">mood_emoji,</if>
+            <if test="energyLevel != null">energy_level,</if>
+            <if test="sleepHours != null">sleep_hours,</if>
+            <if test="exerciseMinutes != null">exercise_minutes,</if>
+            <if test="notes != null">notes,</if>
+            <if test="tags != null">tags,</if>
+            <if test="recordTime != null">record_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="moodScore != null">#{moodScore},</if>
+            <if test="moodLabel != null">#{moodLabel},</if>
+            <if test="moodEmoji != null">#{moodEmoji},</if>
+            <if test="energyLevel != null">#{energyLevel},</if>
+            <if test="sleepHours != null">#{sleepHours},</if>
+            <if test="exerciseMinutes != null">#{exerciseMinutes},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="tags != null">#{tags},</if>
+            <if test="recordTime != null">#{recordTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMoodRecord" parameterType="MoodRecord">
+        update mood_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="moodScore != null">mood_score = #{moodScore},</if>
+            <if test="moodLabel != null">mood_label = #{moodLabel},</if>
+            <if test="moodEmoji != null">mood_emoji = #{moodEmoji},</if>
+            <if test="energyLevel != null">energy_level = #{energyLevel},</if>
+            <if test="sleepHours != null">sleep_hours = #{sleepHours},</if>
+            <if test="exerciseMinutes != null">exercise_minutes = #{exerciseMinutes},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="tags != null">tags = #{tags},</if>
+            <if test="recordTime != null">record_time = #{recordTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMoodRecordById" parameterType="Long">
+        delete from mood_record where id = #{id}
+    </delete>
+
+    <delete id="deleteMoodRecordByIds" parameterType="String">
+        delete from mood_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 月度情绪统计 -->
+    <select id="selectMonthlyStats" resultType="java.util.HashMap">
+        select
+            avg(mood_score) as avgScore,
+            max(mood_score) as maxScore,
+            min(mood_score) as minScore,
+            count(*) as recordCount,
+            (select mood_label from mood_record
+             where user_id = #{userId}
+               and DATE_FORMAT(record_time, '%Y-%m') = #{yearMonth}
+             group by mood_label
+             order by count(*) desc limit 1) as dominantMoodLabel
+        from mood_record
+        where user_id = #{userId}
+          and DATE_FORMAT(record_time, '%Y-%m') = #{yearMonth}
+    </select>
+
+    <!-- 情绪趋势数据（按天分组） -->
+    <select id="selectTrendData" resultType="java.util.HashMap">
+        select
+            DATE_FORMAT(record_time, '%Y-%m-%d') as date,
+            avg(mood_score) as avgScore,
+            mood_label as moodLabel
+        from mood_record
+        where user_id = #{userId}
+          and record_time >= date_sub(curdate(), interval #{days} day)
+        group by DATE_FORMAT(record_time, '%Y-%m-%d'), mood_label
+        order by date asc
+    </select>
+
+    <!-- 情绪分布统计 -->
+    <select id="selectDistribution" resultType="java.util.HashMap">
+        select
+            mood_label as label,
+            count(*) as count,
+            round(count(*) * 100.0 / (select count(*) from mood_record where user_id = #{userId}), 1) as percentage
+        from mood_record
+        where user_id = #{userId}
+        group by mood_label
+        order by count(*) desc
+    </select>
+
+    <!-- 健康因素相关性分析 -->
+    <select id="selectHealthFactors" resultType="java.util.HashMap">
+        select
+            avg(sleep_hours) as avgSleep,
+            avg(exercise_minutes) as avgExercise,
+            avg(energy_level) as avgEnergy,
+            avg(mood_score) as avgMood
+        from mood_record
+        where user_id = #{userId}
+    </select>
+
+    <!-- 综合统计摘要 -->
+    <select id="selectSummary" resultType="java.util.HashMap">
+        select
+            count(*) as totalRecords,
+            avg(mood_score) as avgScore,
+            max(mood_score) as maxScore,
+            min(mood_score) as minScore,
+            (select mood_label from mood_record
+             where user_id = #{userId} and mood_score = (select max(mood_score) from mood_record where user_id = #{userId})
+             limit 1) as bestMood,
+            (select mood_label from mood_record
+             where user_id = #{userId} and mood_score = (select min(mood_score) from mood_record where user_id = #{userId})
+             limit 1) as worstMood,
+            COALESCE((
+                select datediff(
+                    max(record_time),
+                    (select record_time from mood_record
+                     where user_id = #{userId}
+                       and record_time &lt; (select max(record_time) from mood_record where user_id = #{userId})
+                     order by record_time desc limit 1)
+                )
+                from mood_record
+                where user_id = #{userId}
+                  and record_time = (select max(record_time) from mood_record where user_id = #{userId})
+            ), 0) as streakDays
+        from mood_record
+        where user_id = #{userId}
+    </select>
+</mapper>
