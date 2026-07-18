@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +21,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
- * swagger 用户测试方法
+ * swagger 用户测试方法（仅限开发/测试环境）
  *
  * @author ruoyi
  */
+@ConditionalOnProperty(name = "test.enabled", havingValue = "true", matchIfMissing = true)
 @Tag(name = "用户信息管理")
 @RestController
 @RequestMapping("/test/user")
