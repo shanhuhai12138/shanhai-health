@@ -104,7 +104,24 @@ VALUES
 INSERT IGNORE INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`, `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`, `create_time`, `remark`)
 VALUES
 (2021, '咨询师管理', 202, 1, 'list', 'reservation/counselor/list', '', 'CounselorList', 1, 0, 'C', '0', '0', 'reservation:counselor:list', 'user', 'admin', NOW(), '咨询师管理菜单'),
-(2022, '预约管理', 202, 2, 'appointment', 'reservation/counselor/appointment', '', 'CounselorAppointment', 1, 0, 'C', '0', '0', 'reservation:appointment:list', 'peoples', 'admin', NOW(), '预约管理菜单');
+-- 咨询师管理按钮权限
+INSERT IGNORE INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`, `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`, `create_time`, `remark`)
+VALUES
+(20211, '咨询师查询', 2021, 1, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:counselor:query', '#', 'admin', NOW(), ''),
+(20212, '咨询师新增', 2021, 2, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:counselor:add', '#', 'admin', NOW(), ''),
+(20213, '咨询师修改', 2021, 3, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:counselor:edit', '#', 'admin', NOW(), ''),
+(20214, '咨询师删除', 2021, 4, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:counselor:remove', '#', 'admin', NOW(), ''),
+(20215, '咨询师导出', 2021, 5, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:counselor:export', '#', 'admin', NOW(), '');
+(2022, '预约管理', 202, 2, 'appointment', 'reservation/counselor/appointment', '', 'CounselorAppointment', 1, 0, 'C', '0', '0', 'reservation:appointment:list', 'peoples', 'admin', NOW(), '预约管理菜单'),
+(2023, '排班管理', 202, 3, 'schedule', 'reservation/schedule/index', '', 'Schedule', 1, 0, 'C', '0', '0', 'reservation:schedule:list', 'time', 'admin', NOW(), '排班管理菜单'),
+-- 排班管理按钮权限
+INSERT IGNORE INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`, `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`, `create_time`, `remark`)
+VALUES
+(20231, '排班查询', 2023, 1, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:schedule:query', '#', 'admin', NOW(), ''),
+(20232, '排班新增', 2023, 2, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:schedule:add', '#', 'admin', NOW(), ''),
+(20233, '排班修改', 2023, 3, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:schedule:edit', '#', 'admin', NOW(), ''),
+(20234, '排班删除', 2023, 4, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:schedule:remove', '#', 'admin', NOW(), ''),
+(20235, '排班导出', 2023, 5, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:schedule:export', '#', 'admin', NOW(), '');
 
 -- 健康报告二级菜单
 INSERT IGNORE INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`, `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`, `create_time`, `remark`)
@@ -166,7 +183,9 @@ INSERT IGNORE INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES
 (1, 200), (1, 201), (1, 202), (1, 203),
 (1, 2001), (1, 2002), (1, 2003),
 (1, 2011), (1, 2012),
-(1, 2021), (1, 2022),
+(1, 2021), (1, 2022), (1, 2023),
+(1, 20211), (1, 20212), (1, 20213), (1, 20214), (1, 20215),
+(1, 20231), (1, 20232), (1, 20233), (1, 20234), (1, 20235),
 (1, 2031), (1, 2032),
 (1, 204), (1, 2041),
 (1, 20411), (1, 20412);
