@@ -104,6 +104,9 @@ VALUES
 INSERT IGNORE INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`, `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`, `create_time`, `remark`)
 VALUES
 (2021, '咨询师管理', 202, 1, 'list', 'reservation/counselor/list', '', 'CounselorList', 1, 0, 'C', '0', '0', 'reservation:counselor:list', 'user', 'admin', NOW(), '咨询师管理菜单'),
+(2022, '预约管理', 202, 2, 'appointment', 'reservation/counselor/appointment', '', 'CounselorAppointment', 1, 0, 'C', '0', '0', 'reservation:appointment:list', 'peoples', 'admin', NOW(), '预约管理菜单'),
+(2023, '排班管理', 202, 3, 'schedule', 'reservation/schedule/index', '', 'Schedule', 1, 0, 'C', '0', '0', 'reservation:schedule:list', 'time', 'admin', NOW(), '排班管理菜单');
+
 -- 咨询师管理按钮权限
 INSERT IGNORE INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`, `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`, `create_time`, `remark`)
 VALUES
@@ -112,8 +115,7 @@ VALUES
 (20213, '咨询师修改', 2021, 3, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:counselor:edit', '#', 'admin', NOW(), ''),
 (20214, '咨询师删除', 2021, 4, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:counselor:remove', '#', 'admin', NOW(), ''),
 (20215, '咨询师导出', 2021, 5, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:counselor:export', '#', 'admin', NOW(), '');
-(2022, '预约管理', 202, 2, 'appointment', 'reservation/counselor/appointment', '', 'CounselorAppointment', 1, 0, 'C', '0', '0', 'reservation:appointment:list', 'peoples', 'admin', NOW(), '预约管理菜单'),
-(2023, '排班管理', 202, 3, 'schedule', 'reservation/schedule/index', '', 'Schedule', 1, 0, 'C', '0', '0', 'reservation:schedule:list', 'time', 'admin', NOW(), '排班管理菜单'),
+
 -- 排班管理按钮权限
 INSERT IGNORE INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`, `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`, `create_time`, `remark`)
 VALUES
@@ -127,7 +129,16 @@ VALUES
 INSERT IGNORE INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`, `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`, `create_time`, `remark`)
 VALUES
 (2031, '报告列表', 203, 1, 'reportlist', 'reservation/report/list', '', 'ReportList', 1, 0, 'C', '0', '0', 'reservation:report:list', 'document', 'admin', NOW(), '报告列表菜单'),
-(2032, '报告详情', 203, 2, 'reportdetail/:id', 'reservation/report/detail', '1', 'ReportDetail', 1, 0, 'C', '0', '0', 'reservation:report:query', 'eye', 'admin', NOW(), '报告详情菜单');
+(2032, '报告详情', 203, 2, 'reportdetail/:id', 'reservation/report/detail', '1', 'ReportDetail', 1, 0, 'C', '0', '0', 'reservation:report:query', 'eye', 'admin', NOW(), '报告详情菜单'),
+(2033, '综合报告', 203, 3, 'healthReport', 'healthReport/index', '', 'HealthReport', 1, 0, 'C', '0', '0', 'reservation:healthReport:list', 'file', 'admin', NOW(), '综合健康报告菜单');
+
+-- 综合报告按钮权限
+INSERT IGNORE INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`, `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`, `create_time`, `remark`)
+VALUES
+(20331, '报告查询', 2033, 1, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:healthReport:query', '#', 'admin', NOW(), ''),
+(20332, '报告生成', 2033, 2, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:healthReport:add', '#', 'admin', NOW(), ''),
+(20333, '报告修改', 2033, 3, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:healthReport:edit', '#', 'admin', NOW(), ''),
+(20334, '报告删除', 2033, 4, '', '', '', '', 1, 0, 'F', '0', '0', 'reservation:healthReport:remove', '#', 'admin', NOW(), '');
 
 -- 一级菜单：消息通知
 INSERT IGNORE INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`, `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`, `create_time`, `remark`)
@@ -186,7 +197,8 @@ INSERT IGNORE INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES
 (1, 2021), (1, 2022), (1, 2023),
 (1, 20211), (1, 20212), (1, 20213), (1, 20214), (1, 20215),
 (1, 20231), (1, 20232), (1, 20233), (1, 20234), (1, 20235),
-(1, 2031), (1, 2032),
+(1, 2031), (1, 2032), (1, 2033),
+(1, 20331), (1, 20332), (1, 20333), (1, 20334),
 (1, 204), (1, 2041),
 (1, 20411), (1, 20412);
 
