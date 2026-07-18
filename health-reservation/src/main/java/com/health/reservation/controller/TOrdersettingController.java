@@ -136,6 +136,17 @@ public class TOrdersettingController extends BaseController
     }
 
     /**
+     * 按日期查询预约设置（用户端匿名）
+     */
+    @Anonymous
+    @GetMapping("/byDate")
+    public AjaxResult getByDate(@RequestParam String orderDate)
+    {
+        TOrdersetting setting = tOrdersettingService.selectTOrdersettingByDate(orderDate);
+        return success(setting);
+    }
+
+    /**
      * 上传 Excel 文件并导入预约设置
      */
     @PreAuthorize("@ss.hasPermi('reservation:ordersetting:import')")

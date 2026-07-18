@@ -42,6 +42,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE order_date = #{orderDate}
     </select>
 
+    <!-- 按日期字符串查询 -->
+    <select id="selectByOrderDateStr" resultMap="TOrdersettingResult">
+        SELECT id, order_date, number, reservations
+        FROM t_ordersetting
+        WHERE order_date = #{orderDate}
+    </select>
+
     <!-- 批量插入 -->
     <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO t_ordersetting (order_date, number, reservations)

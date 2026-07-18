@@ -85,4 +85,12 @@ public interface ITOrdersettingService
      * @return 结果
      */
     public int editNumberByOrderDate(TOrdersetting tOrdersetting);
+
+    /**
+     * 按日期字符串查询预约设置
+     *
+     * @param orderDate 日期字符串 YYYY-MM-DD
+     * @return 预约设置
+     */
+    public TOrdersetting selectTOrdersettingByDate(String orderDate);
 }

@@ -78,6 +78,14 @@ public interface TOrdersettingMapper
     public TOrdersetting selectByOrderDate(Date orderDate);
 
     /**
+     * 根据预约日期字符串查询预约设置
+     *
+     * @param orderDate 预约日期，格式 YYYY-MM-DD
+     * @return 预约设置
+     */
+    public TOrdersetting selectByOrderDateStr(@Param("orderDate") String orderDate);
+
+    /**
      * 批量插入预约设置
      *
      * @param list 预约设置列表

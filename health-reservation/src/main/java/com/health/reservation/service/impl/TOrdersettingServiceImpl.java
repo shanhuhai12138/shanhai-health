@@ -225,4 +225,13 @@ public class TOrdersettingServiceImpl implements ITOrdersettingService
             return tOrdersettingMapper.insertTOrdersetting(tOrdersetting);
         }
     }
+
+    /**
+     * 按日期字符串查询预约设置
+     */
+    @Override
+    public TOrdersetting selectTOrdersettingByDate(String orderDate)
+    {
+        return tOrdersettingMapper.selectByOrderDateStr(orderDate);
+    }
 }
