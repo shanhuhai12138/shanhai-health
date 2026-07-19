@@ -17,6 +17,7 @@ CREATE TABLE `ai_conversation` (
   `create_time` DATETIME     DEFAULT NULL COMMENT '创建时间',
   `update_by`   VARCHAR(64)  DEFAULT '' COMMENT '更新者',
   `update_time` DATETIME     DEFAULT NULL COMMENT '更新时间',
+  `remark`      VARCHAR(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`),
   KEY `idx_user_id` (`user_id`),
   KEY `idx_update_time` (`update_time`)
