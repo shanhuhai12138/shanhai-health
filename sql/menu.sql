@@ -7,6 +7,7 @@
 --       使用 INSERT IGNORE 避免重复执行时报错
 -- =============================================
 
+CREATE DATABASE IF NOT EXISTS `health` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `health`;
 
 -- =============================================
