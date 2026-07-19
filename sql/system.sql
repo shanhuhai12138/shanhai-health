@@ -3,13 +3,10 @@
 -- 数据库名: health
 -- =============================================
 
-CREATE DATABASE IF NOT EXISTS `health` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `health`;
-
 -- ----------------------------
 -- 1、部门表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_dept`;
 CREATE TABLE `sys_dept` (
   `dept_id`       BIGINT(20)  NOT NULL AUTO_INCREMENT COMMENT '部门ID',
   `parent_id`     BIGINT(20)  DEFAULT 0 COMMENT '父部门ID',
@@ -42,7 +39,7 @@ INSERT INTO sys_dept VALUES(109,  102, '0,100,102',  '财务部门',   2, '若�
 -- ----------------------------
 -- 2、用户信息表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
   `user_id`       BIGINT(20)  NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `dept_id`       BIGINT(20)  DEFAULT NULL COMMENT '部门ID',
@@ -73,7 +70,7 @@ INSERT INTO sys_user VALUES(2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666
 -- ----------------------------
 -- 3、岗位信息表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_post`;
 CREATE TABLE `sys_post` (
   `post_id`     BIGINT(20)  NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
   `post_code`   VARCHAR(64) NOT NULL COMMENT '岗位编码',
@@ -96,7 +93,7 @@ INSERT INTO sys_post VALUES(4, 'user', '普通员工',  4, '0', 'admin', NOW(), 
 -- ----------------------------
 -- 4、角色信息表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role` (
   `role_id`             BIGINT(20)  NOT NULL AUTO_INCREMENT COMMENT '角色ID',
   `role_name`           VARCHAR(30) NOT NULL COMMENT '角色名称',
@@ -121,7 +118,7 @@ INSERT INTO sys_role VALUES('2', '普通角色',    'common', 2, 2, 1, 1, '0', '
 -- ----------------------------
 -- 5、菜单权限表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu` (
   `menu_id`       BIGINT(20)  NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
   `menu_name`     VARCHAR(50) NOT NULL COMMENT '菜单名称',
@@ -242,7 +239,7 @@ INSERT INTO sys_menu VALUES('1060', '生成代码', '116', '6', '#', '', '', '',
 -- ----------------------------
 -- 6、用户和角色关联表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE `sys_user_role` (
   `user_id` BIGINT(20) NOT NULL COMMENT '用户ID',
   `role_id` BIGINT(20) NOT NULL COMMENT '角色ID',
@@ -351,7 +348,7 @@ INSERT INTO sys_role_menu VALUES ('2', '1060');
 -- ----------------------------
 -- 8、角色和部门关联表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_role_dept`;
 CREATE TABLE `sys_role_dept` (
   `role_id` BIGINT(20) NOT NULL COMMENT '角色ID',
   `dept_id` BIGINT(20) NOT NULL COMMENT '部门ID',
@@ -365,7 +362,7 @@ INSERT INTO sys_role_dept VALUES ('2', '105');
 -- ----------------------------
 -- 9、用户与岗位关联表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_user_post`;
 CREATE TABLE `sys_user_post` (
   `user_id` BIGINT(20) NOT NULL COMMENT '用户ID',
   `post_id` BIGINT(20) NOT NULL COMMENT '岗位ID',
@@ -378,7 +375,7 @@ INSERT INTO sys_user_post VALUES ('2', '2');
 -- ----------------------------
 -- 10、操作日志记录
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_oper_log`;
 CREATE TABLE `sys_oper_log` (
   `oper_id`       BIGINT(20)  NOT NULL AUTO_INCREMENT COMMENT '日志主键',
   `title`         VARCHAR(50) DEFAULT '' COMMENT '模块标题',
@@ -406,7 +403,7 @@ CREATE TABLE `sys_oper_log` (
 -- ----------------------------
 -- 11、字典类型表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_dict_type`;
 CREATE TABLE `sys_dict_type` (
   `dict_id`     BIGINT(20)  NOT NULL AUTO_INCREMENT COMMENT '字典主键',
   `dict_name`   VARCHAR(100) DEFAULT '' COMMENT '字典名称',
@@ -435,7 +432,7 @@ INSERT INTO sys_dict_type VALUES(10, '系统状态', 'sys_common_status', '0', '
 -- ----------------------------
 -- 12、字典数据表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_dict_data`;
 CREATE TABLE `sys_dict_data` (
   `dict_code`   BIGINT(20)  NOT NULL AUTO_INCREMENT COMMENT '字典编码',
   `dict_sort`   INT(4)      DEFAULT 0 COMMENT '字典排序',
@@ -487,7 +484,7 @@ INSERT INTO sys_dict_data VALUES(29, 2, '失败', '1', 'sys_common_status', '', 
 -- ----------------------------
 -- 13、参数配置表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_config`;
 CREATE TABLE `sys_config` (
   `config_id`    INT(5)      NOT NULL AUTO_INCREMENT COMMENT '参数主键',
   `config_name`  VARCHAR(100) DEFAULT '' COMMENT '参数名称',
@@ -515,7 +512,7 @@ INSERT INTO sys_config VALUES(9, '用户管理-密码字符范围', 'sys.account
 -- ----------------------------
 -- 14、系统访问记录
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_logininfor`;
 CREATE TABLE `sys_logininfor` (
   `info_id`      BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '访问ID',
   `user_name`    VARCHAR(50) DEFAULT '' COMMENT '用户账号',
@@ -534,7 +531,7 @@ CREATE TABLE `sys_logininfor` (
 -- ----------------------------
 -- 15、定时任务调度表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_job`;
 CREATE TABLE `sys_job` (
   `job_id`          BIGINT(20)  NOT NULL AUTO_INCREMENT COMMENT '任务ID',
   `job_name`        VARCHAR(64) DEFAULT '' COMMENT '任务名称',
@@ -559,7 +556,7 @@ INSERT INTO sys_job VALUES(3, '系统默认（多参）', 'DEFAULT', 'ryTask.ryM
 -- ----------------------------
 -- 16、定时任务调度日志表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_job_log`;
 CREATE TABLE `sys_job_log` (
   `job_log_id`     BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '任务日志ID',
   `job_name`       VARCHAR(64) NOT NULL COMMENT '任务名称',
@@ -577,7 +574,7 @@ CREATE TABLE `sys_job_log` (
 -- ----------------------------
 -- 17、通知公告表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_notice`;
 CREATE TABLE `sys_notice` (
   `notice_id`      INT(4)       NOT NULL AUTO_INCREMENT COMMENT '公告ID',
   `notice_title`   VARCHAR(50)  NOT NULL COMMENT '公告标题',
@@ -598,7 +595,7 @@ INSERT INTO sys_notice VALUES('2', '维护通知：2018-07-01 若依系统凌晨
 -- ----------------------------
 -- 18、公告已读记录表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `sys_notice_read`;
 CREATE TABLE `sys_notice_read` (
   `read_id`     BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '已读主键',
   `notice_id`   INT(4)     NOT NULL COMMENT '公告id',
@@ -611,7 +608,7 @@ CREATE TABLE `sys_notice_read` (
 -- ----------------------------
 -- 19、代码生成业务表
 -- ----------------------------
-
+DROP TABLE IF EXISTS `gen_table`;
 CREATE TABLE `gen_table` (
   `table_id`        BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `table_name`      VARCHAR(200) DEFAULT '' COMMENT '表名称',
@@ -641,7 +638,7 @@ CREATE TABLE `gen_table` (
 -- ----------------------------
 -- 20、代码生成业务表字段
 -- ----------------------------
-
+DROP TABLE IF EXISTS `gen_table_column`;
 CREATE TABLE `gen_table_column` (
   `column_id`     BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `table_id`      BIGINT(20) DEFAULT NULL COMMENT '归属表编号',
@@ -667,3 +664,23 @@ CREATE TABLE `gen_table_column` (
   `update_time`   DATETIME     DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`column_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='代码生成业务表字段';
+
+-- ----------------------------
+-- 21、消息通知表（用户端消息推送）
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_message`;
+CREATE TABLE `sys_message` (
+  `id`           BIGINT NOT NULL AUTO_INCREMENT COMMENT '消息ID',
+  `user_id`      BIGINT NOT NULL COMMENT '接收用户ID',
+  `message_type` VARCHAR(20) NOT NULL COMMENT '消息类型：appointment/report/assessment/system',
+  `title`        VARCHAR(200) NOT NULL COMMENT '消息标题',
+  `content`      TEXT COMMENT '消息内容',
+  `is_read`      CHAR(1) DEFAULT '0' COMMENT '是否已读（0未读 1已读）',
+  `related_id`   BIGINT DEFAULT NULL COMMENT '关联业务ID',
+  `related_type` VARCHAR(50) DEFAULT NULL COMMENT '关联业务类型',
+  `create_time`  DATETIME DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_user_id` (`user_id`),
+  KEY `idx_is_read` (`is_read`),
+  KEY `idx_create_time` (`create_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息通知表';
