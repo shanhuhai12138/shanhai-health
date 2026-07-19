@@ -1,6 +1,25 @@
 # 数据库 SQL 文件说明
 
-## 执行顺序
+## 快速初始化（推荐）
+
+### Windows
+```cmd
+cd sql
+init-db.bat
+# 或指定参数: init-db.bat root admin123 localhost 3306
+```
+
+### Linux / macOS
+```bash
+cd sql
+chmod +x init-db.sh
+./init-db.sh
+# 或指定参数: ./init-db.sh root admin123 localhost 3306
+```
+
+脚本会自动按正确顺序执行全部 4 个 SQL 文件，带进度提示和错误检测。
+
+## 手动执行
 
 部署数据库时，按以下顺序执行 **4 个文件**即可：
 
@@ -29,7 +48,7 @@ mysql -u root -p health < menu.sql
 
 ## 注意
 
-- `seed_data.sql` 不包含系统管理数据（部门/用户/角色/字典等），这些由 `system_init.sql` 提供
-- 所有 INSERT 使用 `INSERT IGNORE` 或幂等写法，确保可重复执行
+- 所有 SQL 文件均自带 `CREATE DATABASE IF NOT EXISTS health`，可直接执行无需手动建库
+- 所有 INSERT 使用幂等写法，可重复执行
 - `system_inserts.sql` 已合并至 `system_init.sql`，可安全删除
-- 执行前确保数据库名为 `health`，连接配置在 `application-druid.yml` 中
+- 执行前确保 MySQL 已启动，连接配置在 `application-druid.yml` 中
