@@ -1,13 +1,22 @@
 package com.health.framework.config;
 
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import java.lang.reflect.Method;
+import java.time.Duration;
 
 /**
  * redis配置
@@ -66,5 +75,46 @@ public class RedisConfig extends CachingConfigurerSupport
                 "    redis.call('expire', key, time)\n" +
                 "end\n" +
                 "return tonumber(current);";
+    }
+
+    /**
+     * 自定义缓存管理器
+     */
+    @Bean
+    public CacheManager cacheManager(RedisConnectionFactory factory)
+    {
+        // 配置序列化
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofHours(1))
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
+                .disableCachingNullValues();
+
+        return RedisCacheManager.builder(factory)
+                .cacheDefaults(config)
+                .build();
+    }
+
+    /**
+     * 自定义 key 生成策略
+     */
+    @Bean
+    public KeyGenerator keyGenerator()
+    {
+        return new KeyGenerator()
+        {
+            @Override
+            public Object generate(Object target, Method method, Object... params)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.append(target.getClass().getName()).append(".");
+                sb.append(method.getName());
+                for (Object arg : params)
+                {
+                    sb.append(".").append(arg);
+                }
+                return sb.toString();
+            }
+        };
     }
 }
