@@ -1,7 +1,7 @@
-package com.health.system.service;
+package com.health.ai.service;
 
-import com.health.system.domain.AiMessage;
-import com.health.system.domain.AiConversation;
+import com.health.ai.domain.AiMessage;
+import com.health.ai.domain.AiConversation;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import java.util.List;
 

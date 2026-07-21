@@ -6,6 +6,7 @@
 -- ----------------------------
 -- 1、部门表
 -- ----------------------------
+use health;
 DROP TABLE IF EXISTS `sys_dept`;
 CREATE TABLE `sys_dept` (
   `dept_id`       BIGINT(20)  NOT NULL AUTO_INCREMENT COMMENT '部门ID',
@@ -680,10 +681,6 @@ CREATE TABLE `sys_message` (
   `related_type` VARCHAR(50) DEFAULT NULL COMMENT '关联业务类型',
   `create_by`    VARCHAR(64) DEFAULT '' COMMENT '创建者',
   `create_time`  DATETIME DEFAULT NULL COMMENT '创建时间',
-  `create_by`    VARCHAR(64) DEFAULT '' COMMENT '创建者',
-  `update_by`    VARCHAR(64) DEFAULT '' COMMENT '更新者',
-  `update_time`  DATETIME DEFAULT NULL COMMENT '更新时间',
-  `remark`       VARCHAR(500) DEFAULT NULL COMMENT '备注',
   `update_by`    VARCHAR(64) DEFAULT '' COMMENT '更新者',
   `update_time`  DATETIME DEFAULT NULL COMMENT '更新时间',
   `remark`       VARCHAR(500) DEFAULT NULL COMMENT '备注',

@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.health.system.mapper.AiChatMapper">
+<mapper namespace="com.health.ai.mapper.AiChatMapper">
 
     <!-- ==================== 会话 ==================== -->
-    <resultMap id="ConversationResult" type="com.health.system.domain.AiConversation">
+    <resultMap id="ConversationResult" type="com.health.ai.domain.AiConversation">
         <id     property="id"          column="id"            />
         <result property="title"       column="title"         />
         <result property="userId"      column="user_id"       />
@@ -16,7 +16,7 @@
     </resultMap>
 
     <!-- ==================== 消息 ==================== -->
-    <resultMap id="MessageResult" type="com.health.system.domain.AiMessage">
+    <resultMap id="MessageResult" type="com.health.ai.domain.AiMessage">
         <id     property="id"             column="id"/>
         <result property="conversationId" column="conversation_id"/>
         <result property="role"           column="role"/>
@@ -25,7 +25,7 @@
         <result property="createTime"     column="create_time"/>
     </resultMap>
 
-    <insert id="insertConversation" parameterType="com.health.system.domain.AiConversation"
+    <insert id="insertConversation" parameterType="com.health.ai.domain.AiConversation"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO ai_conversation(title, user_id, model, status, create_by, create_time, update_time)
         VALUES (#{title}, #{userId}, #{model}, 1, #{createBy}, NOW(), NOW())
@@ -53,7 +53,7 @@
         WHERE id = #{id} AND user_id = #{userId} AND status = 1
     </select>
 
-    <insert id="insertMessage" parameterType="com.health.system.domain.AiMessage"
+    <insert id="insertMessage" parameterType="com.health.ai.domain.AiMessage"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO ai_message(conversation_id, role, content, tokens, create_time)
         VALUES (#{conversationId}, #{role}, #{content}, #{tokens}, NOW())

@@ -12,6 +12,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="sex"    column="sex"    />
         <result property="remark"    column="remark"    />
         <result property="attention"    column="attention"    />
+        <result property="age"    column="age"    />
+        <result property="sort"    column="sort"    />
         <result property="createBy"    column="create_by"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateBy"    column="update_by"    />
@@ -19,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTCheckgroupVo">
-        select id, code, name, help_code, sex, remark, attention, create_by, create_time, update_by, update_time from t_checkgroup
+        select id, code, name, help_code, sex, remark, attention, age, sort, create_by, create_time, update_by, update_time from t_checkgroup
     </sql>
 
     <select id="selectTCheckgroupList" parameterType="TCheckgroup" resultMap="TCheckgroupResult">
@@ -47,6 +49,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sex != null">sex,</if>
             <if test="remark != null">remark,</if>
             <if test="attention != null">attention,</if>
+            <if test="age != null">age,</if>
+            <if test="sort != null">sort,</if>
             <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateBy != null">update_by,</if>
@@ -59,6 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sex != null">#{sex},</if>
             <if test="remark != null">#{remark},</if>
             <if test="attention != null">#{attention},</if>
+            <if test="age != null">#{age},</if>
+            <if test="sort != null">#{sort},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
@@ -75,6 +81,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sex != null">sex = #{sex},</if>
             <if test="remark != null">remark = #{remark},</if>
             <if test="attention != null">attention = #{attention},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="sort != null">sort = #{sort},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateBy != null">update_by = #{updateBy},</if>

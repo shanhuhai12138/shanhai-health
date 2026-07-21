@@ -3,7 +3,7 @@
 -- 数据库名: health
 -- 执行顺序: 在 seed_data.sql 之后执行
 -- 包含: 预约管理 / 心理测评 / 情绪追踪 / 咨询服务 / 健康报告 / AI对话
--- 说明: 系统管理模块的菜单已在 seed_data.sql 中插入（menu_id 1-117, 500-501, 1000-1060），此处不再重复
+-- 说明: 系统管理模块的菜单已在 system.sql 中插入（menu_id 1-117, 500-501, 1000-1060），此处不再重复
 --       使用 INSERT IGNORE 避免重复执行时报错
 -- =============================================
 
@@ -137,7 +137,7 @@ VALUES (204, '消息通知', 0, 9, 'notification', NULL, '', '', 1, 0, 'M', '0',
 
 -- 消息通知二级菜单
 INSERT IGNORE INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`, `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`, `create_time`, `remark`)
-VALUES (2041, '消息中心', 204, 1, 'index', 'reservation/notification/index', '', 'Notification', 1, 0, 'C', '0', '0', 'reservation:notification:list', 'message', 'admin', NOW(), '消息中心菜单');
+VALUES (2041, '消息中心', 204, 1, 'index', 'reservation/notification/index', '', '', 1, 0, 'C', '0', '0', 'reservation:notification:list', 'message', 'admin', NOW(), '消息中心菜单');
 
 -- 消息通知按钮权限
 INSERT IGNORE INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`, `component`, `query`, `route_name`, `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`, `create_by`, `create_time`, `remark`)

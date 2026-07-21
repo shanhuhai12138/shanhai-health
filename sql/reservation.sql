@@ -6,6 +6,7 @@
 -- ----------------------------
 -- 1、套餐组表
 -- ----------------------------
+use health;
 DROP TABLE IF EXISTS `t_setmeal`;
 CREATE TABLE `t_setmeal` (
   `id`          BIGINT(20)  NOT NULL AUTO_INCREMENT COMMENT '套餐ID',
@@ -58,12 +59,12 @@ CREATE TABLE `t_checkgroup` (
 
 INSERT INTO t_checkgroup (code, name, help_code, sex, age, attention, sort, create_by, create_time)
 VALUES
-('XXCX', '血常规', 'XBX', '2', '0+', 1, 'admin', NOW()),
-('ZXFX', '血脂分析', 'ZXF', '2', '18+', 2, 'admin', NOW()),
-('GGHS', '肝功能试验', 'GHS', '2', '0+', 3, 'admin', NOW()),
-('SNHS', '肾功能试验', 'SNH', '2', '0+', 4, 'admin', NOW()),
-('XDCX', '心电图检查', 'DXC', '2', '18+', 5, 'admin', NOW()),
-('FCJC', '腹部彩超', 'FBJ', '2', '0+', 6, 'admin', NOW());
+('XXCX', '血常规', 'XBX', '2', '0+', '', 1, 'admin', NOW()),
+('ZXFX', '血脂分析', 'ZXF', '2', '18+', '', 2, 'admin', NOW()),
+('GGHS', '肝功能试验', 'GHS', '2', '0+', '', 3, 'admin', NOW()),
+('SNHS', '肾功能试验', 'SNH', '2', '0+', '', 4, 'admin', NOW()),
+('XDCX', '心电图检查', 'DXC', '2', '18+', '', 5, 'admin', NOW()),
+('FCJC', '腹部彩超', 'FBJ', '2', '0+', '', 6, 'admin', NOW());
 
 -- ----------------------------
 -- 3、检查项表

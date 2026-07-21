@@ -28,7 +28,7 @@ import com.health.common.core.page.TableDataInfo;
  * @date 2026-07-09
  */
 @RestController
-@RequestMapping("/counseling")
+@RequestMapping("/reservation/counseling")
 public class CounselingController extends BaseController
 {
     @Autowired

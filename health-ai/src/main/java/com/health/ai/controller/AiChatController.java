@@ -1,4 +1,4 @@
-package com.health.system.controller;
+package com.health.ai.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +17,9 @@ import com.health.common.core.controller.BaseController;
 import com.health.common.core.domain.AjaxResult;
 import com.health.common.enums.BusinessType;
 import com.health.common.utils.SecurityUtils;
-import com.health.system.domain.AiConversation;
-import com.health.system.domain.AiMessage;
-import com.health.system.service.IAiChatService;
+import com.health.ai.domain.AiConversation;
+import com.health.ai.domain.AiMessage;
+import com.health.ai.service.IAiChatService;
 
 /**
  * AI 对话 Controller

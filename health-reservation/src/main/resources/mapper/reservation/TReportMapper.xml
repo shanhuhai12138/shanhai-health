@@ -24,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="publisherName"    column="publisher_name"    />
         <result property="publishTime"    column="publish_time"    />
         <result property="archivedTime"    column="archived_time"    />
+        <result property="checkgroupIds"    column="checkgroup_ids"    />
         <result property="delFlag"    column="del_flag"    />
         <result property="createBy"    column="create_by"    />
         <result property="createTime"    column="create_time"    />

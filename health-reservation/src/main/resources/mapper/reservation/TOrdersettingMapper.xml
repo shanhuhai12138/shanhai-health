@@ -9,10 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="orderDate"    column="order_date"    />
         <result property="number"    column="number"    />
         <result property="reservations"    column="reservations"    />
+        <result property="remark"    column="remark"    />
     </resultMap>
 
     <sql id="selectTOrdersettingVo">
-        select id, order_date, number, reservations from t_ordersetting
+        select id, order_date, number, reservations, remark from t_ordersetting
     </sql>
 
     <select id="selectTOrdersettingList" parameterType="TOrdersetting" resultMap="TOrdersettingResult">

@@ -25,7 +25,7 @@ import com.health.common.core.page.TableDataInfo;
  * @date 2026-07-09
  */
 @RestController
-@RequestMapping("/healthReport")
+@RequestMapping("/reservation/healthReport")
 public class HealthReportController extends BaseController
 {
     @Autowired

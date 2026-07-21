@@ -1,7 +1,7 @@
-package com.health.system.mapper;
+package com.health.ai.mapper;
 
-import com.health.system.domain.AiConversation;
-import com.health.system.domain.AiMessage;
+import com.health.ai.domain.AiConversation;
+import com.health.ai.domain.AiMessage;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
