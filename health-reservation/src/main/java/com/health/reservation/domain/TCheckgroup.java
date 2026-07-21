@@ -38,6 +38,14 @@ public class TCheckgroup extends BaseEntity
     @Excel(name = "注意事项")
     private String attention;
 
+    /** 适用年龄范围 */
+    @Excel(name = "适用年龄")
+    private String age;
+
+    /** 排序 */
+    @Excel(name = "排序")
+    private Integer sort;
+
     /** 关联的检查项ID列表（非数据库字段，仅用于前端回显） */
     private Long[] checkItemIds;
 
@@ -111,6 +119,26 @@ public class TCheckgroup extends BaseEntity
         return checkItemIds;
     }
 
+    public void setAge(String age)
+    {
+        this.age = age;
+    }
+
+    public String getAge()
+    {
+        return age;
+    }
+
+    public void setSort(Integer sort)
+    {
+        this.sort = sort;
+    }
+
+    public Integer getSort()
+    {
+        return sort;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -121,6 +149,8 @@ public class TCheckgroup extends BaseEntity
             .append("sex", getSex())
             .append("remark", getRemark())
             .append("attention", getAttention())
+            .append("age", getAge())
+            .append("sort", getSort())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())

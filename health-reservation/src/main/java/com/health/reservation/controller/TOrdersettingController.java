@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.health.common.annotation.Log;
+import com.health.common.annotation.Anonymous;
 import com.health.common.core.controller.BaseController;
 import com.health.common.core.domain.AjaxResult;
 import com.health.common.enums.BusinessType;

@@ -8,7 +8,7 @@ USE health;
 -- ----------------------------
 -- 1. PHQ-9 抑郁症筛查量表（9题）
 -- ----------------------------
-INSERT INTO `assessment` VALUES (1, 'PHQ9', '患者健康问卷-9项', 'PHQ-9是临床上最常用的抑郁症筛查量表，通过9个问题评估过去两周内的抑郁症状严重程度。', 27, '[{"level":"正常","min":0,"max":4,"desc":"情绪良好，无需担心"},{"level":"轻度","min":5,"max":9,"desc":"可能有轻微抑郁情绪，建议关注自我调节"},{"level":"中度","min":10,"max":14,"desc":"存在中等程度抑郁症状，建议寻求专业帮助"},{"level":"中重度","min":15,"max":19,"desc":"抑郁症状较明显，建议尽快咨询心理专业人士"},{"level":"重度","min":20,"max":27,"desc":"抑郁症状严重，建议立即就医"}]', 10, 'psychological', '0', 'admin', NOW(), 'admin', NOW(), NULL);
+INSERT INTO `assessment` (`id`, `code`, `name`, `description`, `total_score`, `severity_levels`, `estimated_duration`, `category`, `status`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (1, 'PHQ9', '患者健康问卷-9项', 'PHQ-9是临床上最常用的抑郁症筛查量表，通过9个问题评估过去两周内的抑郁症状严重程度。', 27, '[{"level":"正常","min":0,"max":4,"desc":"情绪良好，无需担心"},{"level":"轻度","min":5,"max":9,"desc":"可能有轻微抑郁情绪，建议关注自我调节"},{"level":"中度","min":10,"max":14,"desc":"存在中等程度抑郁症状，建议寻求专业帮助"},{"level":"中重度","min":15,"max":19,"desc":"抑郁症状较明显，建议尽快咨询心理专业人士"},{"level":"重度","min":20,"max":27,"desc":"抑郁症状严重，建议立即就医"}]', 10, 'psychological', '0', 'admin', NOW(), 'admin', NOW(), NULL);
 
 INSERT INTO `assessment_question` (`id`, `assessment_id`, `question_no`, `question_text`, `question_type`, `options`, `reverse_score`, `sort_order`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`)
 VALUES
@@ -25,7 +25,7 @@ VALUES
 -- ----------------------------
 -- 2. GAD-7 焦虑症筛查量表（7题）
 -- ----------------------------
-INSERT INTO `assessment` VALUES (2, 'GAD7', '广泛性焦虑量表-7项', 'GAD-7是广泛性焦虑障碍的筛查工具，通过7个问题评估焦虑症状的严重程度。', 21, '[{"level":"无明显焦虑","min":0,"max":4,"desc":"焦虑水平正常"},{"level":"轻度","min":5,"max":9,"desc":"可能有轻度焦虑，建议自我调节"},{"level":"中度","min":10,"max":14,"desc":"存在中等程度焦虑，建议寻求专业帮助"},{"level":"重度","min":15,"max":21,"desc":"焦虑症状较明显，建议尽快咨询心理专业人士"}]', 7, 'psychological', '0', 'admin', NOW(), 'admin', NOW(), NULL);
+INSERT INTO `assessment` (`id`, `code`, `name`, `description`, `total_score`, `severity_levels`, `estimated_duration`, `category`, `status`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (2, 'GAD7', '广泛性焦虑量表-7项', 'GAD-7是广泛性焦虑障碍的筛查工具，通过7个问题评估焦虑症状的严重程度。', 21, '[{"level":"无明显焦虑","min":0,"max":4,"desc":"焦虑水平正常"},{"level":"轻度","min":5,"max":9,"desc":"可能有轻度焦虑，建议自我调节"},{"level":"中度","min":10,"max":14,"desc":"存在中等程度焦虑，建议寻求专业帮助"},{"level":"重度","min":15,"max":21,"desc":"焦虑症状较明显，建议尽快咨询心理专业人士"}]', 7, 'psychological', '0', 'admin', NOW(), 'admin', NOW(), NULL);
 
 INSERT INTO `assessment_question` (`id`, `assessment_id`, `question_no`, `question_text`, `question_type`, `options`, `reverse_score`, `sort_order`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`)
 VALUES
@@ -40,7 +40,7 @@ VALUES
 -- ----------------------------
 -- 3. SAS 焦虑自评量表（20题简版用3题演示）
 -- ----------------------------
-INSERT INTO `assessment` VALUES (3, 'SAS', '焦虑自评量表', 'SAS是由Zung编制的焦虑自评量表，用于评估焦虑症状的轻重程度。标准分=整数部分×100/20。', 80, '[{"level":"正常","min":20,"max":50,"desc":"焦虑水平正常"},{"level":"轻度","min":51,"max":59,"desc":"有轻度焦虑症状"},{"level":"中度","min":60,"max":69,"desc":"有明显焦虑症状，建议寻求专业帮助"},{"level":"重度","min":70,"max":80,"desc":"焦虑症状严重，建议尽快就医"}]', 15, 'psychological', '0', 'admin', NOW(), 'admin', NOW(), NULL);
+INSERT INTO `assessment` (`id`, `code`, `name`, `description`, `total_score`, `severity_levels`, `estimated_duration`, `category`, `status`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (3, 'SAS', '焦虑自评量表', 'SAS是由Zung编制的焦虑自评量表，用于评估焦虑症状的轻重程度。标准分=整数部分×100/20。', 80, '[{"level":"正常","min":20,"max":50,"desc":"焦虑水平正常"},{"level":"轻度","min":51,"max":59,"desc":"有轻度焦虑症状"},{"level":"中度","min":60,"max":69,"desc":"有明显焦虑症状，建议寻求专业帮助"},{"level":"重度","min":70,"max":80,"desc":"焦虑症状严重，建议尽快就医"}]', 15, 'psychological', '0', 'admin', NOW(), 'admin', NOW(), NULL);
 
 INSERT INTO `assessment_question` (`id`, `assessment_id`, `question_no`, `question_text`, `question_type`, `options`, `reverse_score`, `sort_order`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`)
 VALUES

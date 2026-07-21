@@ -50,6 +50,13 @@ public class TSetmeal extends BaseEntity
     @Excel(name = "图片路径")
     private String img;
 
+    /** 状态（0正常 1停用） */
+    @Excel(name = "状态", readConverterExp = "0=正常,1=停用")
+    private String status;
+
+    /** 删除标志（0代表存在 2代表删除） */
+    private String delFlag;
+
     public void setId(Long id) 
     {
         this.id = id;
@@ -135,9 +142,29 @@ public class TSetmeal extends BaseEntity
         this.img = img;
     }
 
-    public String getImg() 
+    public String getImg()
     {
         return img;
+    }
+
+    public void setStatus(String status)
+    {
+        this.status = status;
+    }
+
+    public String getStatus()
+    {
+        return status;
+    }
+
+    public void setDelFlag(String delFlag)
+    {
+        this.delFlag = delFlag;
+    }
+
+    public String getDelFlag()
+    {
+        return delFlag;
     }
 
     @Override
@@ -153,6 +180,8 @@ public class TSetmeal extends BaseEntity
             .append("remark", getRemark())
             .append("attention", getAttention())
             .append("img", getImg())
+            .append("status", getStatus())
+            .append("delFlag", getDelFlag())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())

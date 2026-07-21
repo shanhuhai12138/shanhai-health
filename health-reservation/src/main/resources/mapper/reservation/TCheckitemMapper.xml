@@ -14,6 +14,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="type"    column="type"    />
         <result property="attention"    column="attention"    />
         <result property="remark"    column="remark"    />
+        <result property="checkDept"    column="check_dept"    />
+        <result property="helpCode"    column="help_code"    />
+        <result property="cate"    column="cate"    />
+        <result property="checkgroupId"    column="checkgroup_id"    />
+        <result property="notice"    column="notice"    />
+        <result property="abstractInfo"    column="abstract"    />
+        <result property="isAddin"    column="is_addin"    />
+        <result property="sort"    column="sort"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="unit"    column="unit"    />
+        <result property="normalRange"    column="normal_range"    />
         <result property="createBy"    column="create_by"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateBy"    column="update_by"    />
@@ -21,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTCheckitemVo">
-        select id, code, name, sex, age, price, type, attention, remark, create_by, create_time, update_by, update_time from t_checkitem
+        select id, code, name, sex, age, price, type, attention, remark, create_by, create_time, update_by, update_time, check_dept, help_code, cate, checkgroup_id, notice, abstract, is_addin, sort, del_flag, unit, normal_range from t_checkitem
     </sql>
 
     <select id="selectTCheckitemList" parameterType="TCheckitem" resultMap="TCheckitemResult">
@@ -34,6 +45,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="price != null "> and price = #{price}</if>
             <if test="type != null  and type != ''"> and type = #{type}</if>
             <if test="attention != null  and attention != ''"> and attention = #{attention}</if>
+            <if test="helpCode != null  and helpCode != ''"> and help_code like concat('%', #{helpCode}, '%')</if>
+            <if test="cate != null  and cate != ''"> and cate = #{cate}</if>
+            <if test="checkgroupId != null "> and checkgroup_id = #{checkgroupId}</if>
+            <if test="delFlag != null  and delFlag != ''"> and del_flag = #{delFlag}</if>
         </where>
     </select>
     
@@ -57,6 +72,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">create_time,</if>
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
+            <if test="checkDept != null">check_dept,</if>
+            <if test="helpCode != null">help_code,</if>
+            <if test="cate != null">cate,</if>
+            <if test="checkgroupId != null">checkgroup_id,</if>
+            <if test="notice != null">notice,</if>
+            <if test="abstractInfo != null">abstract,</if>
+            <if test="isAddin != null">is_addin,</if>
+            <if test="sort != null">sort,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="unit != null">unit,</if>
+            <if test="normalRange != null">normal_range,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="code != null">#{code},</if>
@@ -71,6 +97,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">#{createTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
+            <if test="checkDept != null">#{checkDept},</if>
+            <if test="helpCode != null">#{helpCode},</if>
+            <if test="cate != null">#{cate},</if>
+            <if test="checkgroupId != null">#{checkgroupId},</if>
+            <if test="notice != null">#{notice},</if>
+            <if test="abstractInfo != null">#{abstractInfo},</if>
+            <if test="isAddin != null">#{isAddin},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="normalRange != null">#{normalRange},</if>
          </trim>
     </insert>
 
@@ -89,6 +126,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="checkDept != null">check_dept = #{checkDept},</if>
+            <if test="helpCode != null">help_code = #{helpCode},</if>
+            <if test="cate != null">cate = #{cate},</if>
+            <if test="checkgroupId != null">checkgroup_id = #{checkgroupId},</if>
+            <if test="notice != null">notice = #{notice},</if>
+            <if test="abstractInfo != null">abstract = #{abstractInfo},</if>
+            <if test="isAddin != null">is_addin = #{isAddin},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="normalRange != null">normal_range = #{normalRange},</if>
         </trim>
         where id = #{id}
     </update>

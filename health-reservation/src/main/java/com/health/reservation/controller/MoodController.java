@@ -31,7 +31,7 @@ import com.health.common.core.page.TableDataInfo;
  * @date 2026-07-09
  */
 @RestController
-@RequestMapping("/mood")
+@RequestMapping("/reservation/mood")
 public class MoodController extends BaseController
 {
     @Autowired

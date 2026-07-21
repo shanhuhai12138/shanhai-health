@@ -27,11 +27,11 @@ public class TOrdersetting extends BaseEntity
 
     /** 可预约人数 */
     @Excel(name = "可预约人数")
-    private Long number;
+    private Integer number;
 
     /** 已预约人数 */
     @Excel(name = "已预约人数")
-    private Long reservations;
+    private Integer reservations;
 
     public void setId(Long id) 
     {
@@ -53,22 +53,22 @@ public class TOrdersetting extends BaseEntity
         return orderDate;
     }
 
-    public void setNumber(Long number) 
+    public void setNumber(Integer number)
     {
         this.number = number;
     }
 
-    public Long getNumber() 
+    public Integer getNumber() 
     {
         return number;
     }
 
-    public void setReservations(Long reservations) 
+    public void setReservations(Integer reservations)
     {
         this.reservations = reservations;
     }
 
-    public Long getReservations() 
+    public Integer getReservations() 
     {
         return reservations;
     }

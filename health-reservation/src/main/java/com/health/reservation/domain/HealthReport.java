@@ -49,8 +49,8 @@ public class HealthReport extends BaseEntity
     @Excel(name = "AI建议")
     private String aiRecommendations;
 
-    /** 报告状态（0生成中 1已完成 2已归档） */
-    @Excel(name = "报告状态", readConverterExp = "0=生成中,1=已完成,2=已归档")
+    /** 报告状态（0待生成 1已审核 2已发布） */
+    @Excel(name = "报告状态", readConverterExp = "0=待生成,1=已审核,2=已发布")
     private String reportStatus;
 
     /** 生成时间 */

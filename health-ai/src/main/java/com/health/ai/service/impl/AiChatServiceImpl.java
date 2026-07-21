@@ -1,4 +1,4 @@
-package com.health.system.service.impl;
+package com.health.ai.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import com.health.common.utils.SecurityUtils;
-import com.health.system.config.AiModelProperties;
-import com.health.system.domain.AiConversation;
-import com.health.system.domain.AiMessage;
-import com.health.system.mapper.AiChatMapper;
-import com.health.system.service.IAiChatService;
+import com.health.ai.config.AiModelProperties;
+import com.health.ai.domain.AiConversation;
+import com.health.ai.domain.AiMessage;
+import com.health.ai.mapper.AiChatMapper;
+import com.health.ai.service.IAiChatService;
 import dev.langchain4j.data.message.ChatMessage;
 import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;

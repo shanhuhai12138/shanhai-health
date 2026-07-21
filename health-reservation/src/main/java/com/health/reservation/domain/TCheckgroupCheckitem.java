@@ -2,7 +2,6 @@ package com.health.reservation.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.health.common.core.domain.BaseEntity;
 
 /**
  * 检查组检查项关联对象 t_checkgroup_checkitem
@@ -10,7 +9,7 @@ import com.health.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2026-06-29
  */
-public class TCheckgroupCheckitem extends BaseEntity
+public class TCheckgroupCheckitem
 {
     private static final long serialVersionUID = 1L;
 

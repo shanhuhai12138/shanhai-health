@@ -1,4 +1,4 @@
-package com.health.system.config;
+package com.health.ai.config;
 
 import java.time.Duration;
 import org.slf4j.Logger;

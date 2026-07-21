@@ -32,7 +32,7 @@ import com.health.common.utils.SecurityUtils;
  * @date 2026-07-14
  */
 @RestController
-@RequestMapping("/notification")
+@RequestMapping("/reservation/notification")
 public class NotificationController extends BaseController
 {
     @Autowired

@@ -36,7 +36,7 @@ import com.health.common.utils.SecurityUtils;
  * @date 2026-07-09
  */
 @RestController
-@RequestMapping("/assessment")
+@RequestMapping("/reservation/assessment")
 public class AssessmentController extends BaseController
 {
     @Autowired

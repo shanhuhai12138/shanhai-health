@@ -46,13 +46,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY order_date ASC
     </select>
 
-    <!-- 获取套餐销售排行 -->
+    <!-- 获取套餐销售排行（按报告数量降序） -->
     <select id="selectSetmealRanking" resultType="java.util.HashMap">
         SELECT
-            name AS name,
-            price AS price
-        FROM t_setmeal
-        ORDER BY id DESC
+            s.name AS name,
+            s.price AS price,
+            COUNT(r.id) AS sale_count
+        FROM t_setmeal s
+        LEFT JOIN t_report r ON r.setmeal_id = s.id
+        GROUP BY s.id, s.name, s.price
+        ORDER BY sale_count DESC, s.id DESC
         LIMIT 5
     </select>
 

@@ -1,4 +1,4 @@
-package com.health.system.domain;
+package com.health.ai.domain;
 
 import com.health.common.core.domain.BaseEntity;
 
