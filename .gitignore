@@ -123,3 +123,14 @@ docker-compose*.local.yml
 # 其他临时文件
 *.tmp
 *.temp
+
+# ===== 纠察方案相关（只保留最终版 V3） =====
+项目纠察方案_V2.md
+项目纠察方案_V2.bak.md
+项目纠察方案_part1.md
+项目完善计划书.md
+
+# ===== 临时文件 =====
+temp.txt
+plan_content.txt
+
