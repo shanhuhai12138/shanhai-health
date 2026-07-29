@@ -155,3 +155,8 @@ skills-lock.json
 # Node.js 相关文件
 package-lock.json
 yarn.lock
+
+
+# ===== 工作文件（不要提交到GitHub）=====
+重构方案.md
+
