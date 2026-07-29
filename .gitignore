@@ -73,3 +73,53 @@ tmp/
 .env
 .env.local
 .env.*.local
+
+# 本地开发配置文件（不要提交！）
+application-dev.yml
+application-test.yml
+application-local.yml
+
+# Druid 数据源配置（可能包含数据库密码！）
+application-druid.yml
+
+# 不要提交私钥、证书、密钥文件
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# 不要提交日志文件（即使 *.log 已忽略，但特定目录的日志更保险）
+*/logs/*
+*.log
+
+# 不要提交 IDE 运行/调试配置
+*.ipr
+*.iws
+*.iml
+*.DS_Store
+
+# Docker 本地配置（如有）
+docker-compose*.local.yml
+*.dockerignore
+
+# Gradle 本地缓存
+.gradle/
+
+# 不要提交本地数据库文件（如 SQLite、H2）
+*.db
+*.h2.db
+*.sqlite
+
+# 编译产物（除了 Maven target/）
+*.jar
+*.war
+*.ear
+
+# 不要提交本地工作区信息
+*.swp
+*.swo
+
+# 其他临时文件
+*.tmp
+*.temp
