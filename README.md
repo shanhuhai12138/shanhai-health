@@ -1,32 +1,89 @@
-<p align="center">
-  <h1 align="center">🏥 山海健康 (ShanHai Health)</h1>
-  <p align="center">AI 驱动的心理健康管理平台 — Spring Boot 3 + Vue 3 + LangChain4j</p>
-</p>
+# 🏥 ShanHai Health（山海健康）
 
-[![Java](https://img.shields.io/badge/Java-21-blue)]()
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.14-brightgreen)]()
-[![Vue](https://img.shields.io/badge/Vue-3.5-42b883)]()
-[![License](https://img.shields.io/badge/License-MIT-yellow)]()
+> **一个基于若依框架（RuoYi）二次开发的医疗健康管理系统练手项目**
+
+![Java](https://img.shields.io/badge/Java-21-blue) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5.14-brightgreen) ![Vue 3](https://img.shields.io/badge/Vue-3.5.26-42b883) ![Element Plus](https://img.shields.io/badge/Element_Plus-2.13.1-blue) ![MySQL](https://img.shields.io/badge/MySQL-8+-white) ![MIT License](https://img.shields.io/badge/license-MIT-yellow)
 
 ---
 
-## ✨ 项目亮点
+## 📖 项目简介
 
-- **AI 健康报告** — 基于 LangChain4j + 通义千问，自动生成四段式健康分析和改善建议
-- **智能推荐引擎** — 根据心理测评结果动态匹配体检套餐/咨询师服务
-- **C端+B端双门户** — 管理后台 + 患者端完整页面
-- **用户自选 AI 模型** — 支持通义千问 / OpenAI / DeepSeek，可自定义 API Key
-- **流式对话** — SSE 打字机效果实时输出
+**ShanHai Health** 是一个面向医疗健康场景的管理系统，旨在为用户提供预约管理、心理测评、情绪追踪、健康报告等一站式服务。本项目基于开源的 **若依框架（RuoYi-Vue）** 二次开发，结合了若依成熟的架构与医疗健康业务场景的需求，是一个个人练手项目。
 
-## 📋 技术栈
+> ⚠️ **说明**：本项目为依靠若依框架的个人练手项目，代码质量、功能完整度和稳定性仅供参考学习，不建议直接用于生产环境。部分功能仍在完善中。
 
-| 层 | 技术 |
-|---|------|
-| 后端 | Java 21, Spring Boot 3.5.14, Spring Security, MyBatis |
-| 前端 | Vue 3, Vite 6, Element Plus, ECharts, Pinia |
-| AI | LangChain4j 0.36.2, 通义千问 / OpenAI / DeepSeek |
-| 数据库 | MySQL 8+, Redis |
-| 工具 | Maven, Docker (可部署), 阿里云 DashScope |
+---
+
+## 🚀 核心功能
+
+### ✅ 已实现功能
+
+| 模块 | 功能描述 |
+|------|---------|
+| **系统管理** | 用户、角色、菜单、字典、部门等基础管理 |
+| **预约管理** | 套餐/检查项/检查组管理、预约创建与取消 |
+| **排班管理** | 咨询师排班设置（表格 + 日历双视图）|
+| **心理测评** | PHQ-9、GAD-7、SAS 量表题目与结果管理 |
+| **情绪追踪** | 情绪记录与趋势图表可视化 |
+| **健康报告** | 报告查看、AI 生成健康分析报告 |
+| **AI 对话** | 基于 LangChain4j 的智能问答（支持 DashScope/DeepSeek/OpenAI）|
+| **定时提醒** | Quartz 定时任务，预约前发送通知 |
+| **数据统计** | 今日预约数、本月体检人次、活跃咨询师等统计 |
+
+### ⚠️ 待完善功能
+
+| 模块 | 当前状态 | 计划 |
+|------|---------|------|
+| **AI 健康报告生成** | 仅展示 AI 回复，缺少完整四段式分析结构 | 需完善 AI 提示词和报告模板 |
+| **预约提醒功能** | ReminderJob 已创建但未配置 Cron（内存模式）| 需配置数据库 Quartz 任务表 |
+| **移动端适配** | 基础响应式，体验一般 | 进一步优化移动端布局 |
+| **测试覆盖** | 缺少单元测试 | 计划补充核心 Service 层测试 |
+| **文档完善** | README 初版 | 完善 API 文档、数据库说明 |
+
+---
+
+## 🛠️ 技术栈
+
+### 后端
+- **JDK 21** + **Spring Boot 3.5.14**
+- **Spring Security** + **JWT** 认证授权
+- **MyBatis Plus** + **PageHelper** 分页
+- **Druid** 数据库连接池 + **Redis** 缓存
+- **Quartz** 定时任务（内存模式）
+- **LangChain4j** AI 对话框架
+- **Fastjson2** JSON 处理
+
+### 前端
+- **Vue 3.5.26** + **Vite 6**
+- **Element Plus 2.13.1** UI 组件库
+- **Pinia** 状态管理
+- **Vue Router 4.6.4** 路由
+- **Axios** 请求拦截
+- **ECharts** 图表可视化
+
+### 数据库
+- **MySQL 8+** 关系型数据库
+- **Redis 7+** 缓存服务（基础配置）
+
+---
+
+## 📁 项目结构
+
+```
+health/
+├── health-admin/          # Spring Boot 启动入口 + 系统管理模块
+├ ├── health-framework     # 核心框架（安全/配置/AOP/拦截器）
+├ ├── health-system        # 系统模块（用户/角色/菜单/字典）
+├ ├── health-reservation   # 核心业务（预约/测评/情绪/报告/排班）
+├ ├── health-ai            # AI 对话模块（LangChain4j 集成）
+├ ├── health-common        # 通用工具类
+├ ├── health-quartz        # 定时任务模块
+├ ├── health-generator     # 代码生成器
+├ ├── health-Vue3          # 前端 Vue3 项目
+└── sql/                   # 数据库初始化脚本
+```
+
+---
 
 ## 🚀 快速启动
 
@@ -34,36 +91,36 @@
 
 - JDK 21+
 - MySQL 8+
-- Redis 7+
+- Redis 7+（可选）
 - Node.js 18+
+- Maven 3.8+
 
 ### 1. 初始化数据库
 
 ```bash
 # 创建数据库
-mysql -u root -p -e "CREATE DATABASE health DEFAULT CHARACTER SET utf8mb4;"
+mysql -u root -p -e "CREATE DATABASE health DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
-# 按顺序执行 SQL
+# 登录并执行 SQL 脚本
 mysql -u root -p health < sql/system.sql
 mysql -u root -p health < sql/reservation.sql
 mysql -u root -p health < sql/new_tables.sql
 mysql -u root -p health < sql/ai.sql
-mysql -u root -p health < sql/quartz.sql
 mysql -u root -p health < sql/seed_data.sql
 mysql -u root -p health < sql/menu.sql
-mysql -u root -p health < sql/ai_menu.sql
 ```
+
+> **默认账号**：`admin` / `admin123`
 
 ### 2. 启动后端
 
 ```bash
 cd health
-mvn clean package -DskipTests
-java -jar health-admin/target/health-admin.jar
-# 或直接在 IDEA 中运行 ShanHaiApplication
+mvn clean install -DskipTests
+# 或直接在 IDEA 中运行 health-admin 模块的 ShanHaiApplication.java
 ```
 
-> 如需自定义数据库密码：`java -DDB_PASSWORD=yourpwd -jar ...`
+后端默认端口：**8090**
 
 ### 3. 启动前端
 
@@ -73,72 +130,57 @@ npm install
 npm run dev
 ```
 
-浏览器访问 `http://localhost`，默认账号 `admin` / `admin123`
+前端默认端口：**80**
 
-### 4. AI 对话（可选）
-
-在 `application.yml` 中配置：
-```yaml
-ai:
-  model:
-    provider: dashscope       # 或 openai / deepseek
-    api-key: ${AI_API_KEY:}   # 通过环境变量注入
-```
-
-或在 AI 聊天页面直接填写 API Key（仅保存在浏览器本地）。
-
-## 📁 项目结构
-
-```
-health/
-├── health-admin/           # 启动入口 + 系统管理
-├── health-framework/       # 核心框架（安全/配置/AOP）
-├── health-system/          # 系统模块（用户/角色/菜单）
-├── health-reservation/     # 预约/测评/情绪/报告/推荐模块 ⭐
-├── health-ai/              # AI 对话模块 ⭐
-├── health-common/          # 公共工具类
-├── health-quartz/          # 定时任务
-├── health-generator/       # 代码生成器
-├── health-Vue3/            # 前端项目 ⭐
-└── sql/                    # 数据库初始化脚本
-```
-
-## 🖥️ 功能模块
-
-### 管理后台
-- 系统管理：用户/角色/菜单/字典
-- 预约管理：套餐/检查组/检查项/预约设置
-- 心理测评：PHQ-9/GAD-7/SAS 量表管理
-- 情绪追踪：记录/趋势图表
-- 咨询服务：咨询师/排班/预约
-- 健康报告：生成/AI分析/编辑/删除
-- AI 对话：会话管理/流式聊天
-- 数据看板：统计概览/图表分析
-
-### 患者端
-- 首页：统计概览/快捷入口
-- 预约套餐：浏览/下单
-- 心理测评：答题/结果查看
-- 情绪记录：评分/趋势图
-- 健康报告：AI 分析/建议
-- 推荐中心：智能匹配
-- 消息通知：已读/未读
-- 个人中心
-
-## 📄 许可证
-
-本项目基于 [MIT License](LICENSE)，基于 [RuoYi-Vue](https://gitee.com/y_project/RuoYi-Vue) 二次开发。
-
-## 👤 作者
-
-- **shanhuhai12138**
-- GitHub: [@shanhuhai12138](https://github.com/shanhuhai12138)
-
+浏览器访问：`http://localhost`
 
 ---
 
-## 📝 项目完善计划
+## 🎨 项目特色
 
-本项目已创建完整的《项目完善计划书》，包含 6 个阶段、27 个子任务的详细规划，详见：项目完善计划书.md
+- ✅ **双视图排班管理**：表格 + 日历（el-calendar）双视图，直观查看每日可用时段
+- ✅ **AI 健康助手**：集成通义千问（DashScope），支持流式输出和 API Key 自定义
+- ✅ **定时提醒机制**：预约提醒功能框架已搭建，支持 Quartz 任务扩展
+- ✅ **现代化 UI 美化**：卡片阴影、按钮悬停、侧边栏动效等增强体验
+- ✅ **医疗主题色**：采用青绿色（#00b8a0）为主色调，符合医疗健康场景氛围
 
-该计划涵盖：SQL修复、安全加固、功能完善、测试覆盖、文档完善、CI/CD 部署等全流程，可用于指导项目迭代和开源发布。
+---
+
+## ⚠️ 使用说明与注意事项
+
+1. **这是一个练手项目**：代码质量和功能完整性未经过生产环境验证，仅适合学习参考。
+2. **Quartz 配置**：当前使用内存模式，如需持久化请配置 `spring.quartz.job-store-type: jdbc` 并创建 Quartz 表。
+3. **AI 功能**：需在 `application.yml` 中配置 `AI_API_KEY` 环境变量或填入 Key 才能使用真实 AI 对话。
+4. **端口冲突**：默认后端 8090、前端 80，如被占用请修改配置。
+5. **数据库密码**：默认使用 `Lyyyyforever567`，生产环境请修改环境变量 `DB_PASSWORD`。
+
+---
+
+## 📊 项目对比（若依原版 vs ShanHai Health）
+
+| 特性 | 若依原版 (RuoYi-Vue) | ShanHai Health 改进版 |
+|------|---------------------|----------------------|
+| 项目命名 | RuoYi | ShanHai Health |
+| 业务模块 | 通用 OA/CRM | 医疗健康业务（预约/测评/情绪/AI报告）|
+| 颜色主题 | 默认蓝 | 医疗青绿色主调 |
+| 额外模块 | - | AI 对话、情绪追踪、健康报告 |
+| 日历视图 | 无 | SchedulePage 新增日历双视图 |
+| 定时任务 | 基础 Job | 新增 ReminderJob 框架 |
+| 包名冲突 | - | health-ai 已修复包名冲突 |
+| SQL 完整性 | 部分问题 | 已修复 INSERT IGNORE / USE health |
+
+---
+
+## 🤝 致谢
+
+本项目基于开源框架 **[RuoYi-Vue](https://gitee.com/y_project/RuoYi-Vue)** 二次开发，感谢 RuoYi 团队提供的优秀基础架构。
+
+---
+
+## 📄 许可证
+
+本项目采用 **MIT License**，详见 [LICENSE](LICENSE) 文件。
+
+---
+
+**最后更新：2026-07-29** | **作者：shanhuhai12138**
