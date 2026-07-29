@@ -71,8 +71,9 @@ tmp/
 
 # 环境变量 & 本地配置
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+!.env.template
 
 # 本地开发配置文件（不要提交！）
 application-dev.yml
@@ -89,7 +90,7 @@ application-druid.yml
 *.p12
 *.pfx
 
-# 不要提交日志文件（即使 *.log 已忽略，但特定目录的日志更保险）
+# 不要提交日志文件（即使 *.log 已包含，但特定目录的日志更保险）
 */logs/*
 *.log
 
@@ -129,13 +130,9 @@ docker-compose*.local.yml
 项目纠察方案_V2.bak.md
 项目纠察方案_part1.md
 项目完善计划书.md
+项目纠察方案.md
 
-# ===== 临时文件 =====
-temp.txt
-plan_content.txt
-
-
-# 工具/IDE 配置目录（不要提交）
+# ===== 工具/IDE 配置目录（不要提交） =====
 .agents/
 .claude/
 .idea/
@@ -143,14 +140,18 @@ plan_content.txt
 .vscode/
 .reasonix/
 
-# 本地构建/输出目录
+# ===== 本地构建/输出目录 =====
 bin/
 doc/
 
-# 临时文件和工具生成的脚本
+# ===== 临时文件和工具生成的脚本 =====
 _gen_doc.ps1
 _gen_doc.py
 
-# 本地敏感文件
-info.txt
+# ===== 本地敏感/临时文件 =====
 null
+skills-lock.json
+
+# Node.js 相关文件
+package-lock.json
+yarn.lock
