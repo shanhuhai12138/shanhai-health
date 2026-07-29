@@ -149,10 +149,18 @@ npm run dev
 ## ⚠️ 使用说明与注意事项
 
 1. **这是一个练手项目**：代码质量和功能完整性未经过生产环境验证，仅适合学习参考。
+
 2. **Quartz 配置**：当前使用内存模式，如需持久化请配置 `spring.quartz.job-store-type: jdbc` 并创建 Quartz 表。
-3. **AI 功能**：需在 `application.yml` 中配置 `AI_API_KEY` 环境变量或填入 Key 才能使用真实 AI 对话。
+
+3. **AI 功能**：需在 `application.yml` 中配置 AI API Key（第 152 行左右），或使用环境变量 `AI_API_KEY` 注入。
+   > TODO: 在 `health-admin/src/main/resources/application.yml` 的 `ai.model.api-key` 处填入你的 AI Key（支持 DashScope/OpenAI/DeepSeek）
+
 4. **端口冲突**：默认后端 8090、前端 80，如被占用请修改配置。
-5. **数据库密码**：默认使用 `Lyyyyforever567`，生产环境请修改环境变量 `DB_PASSWORD`。
+
+5. **数据库配置**：数据库密码应通过环境变量 `DB_PASSWORD` 设置，不要硬编码在配置文件中。
+   > TODO: 修改 `health-admin/src/main/resources/application-druid.yml` 中的数据库密码，建议使用强密码并通过环境变量注入
+
+6. **默认账号**：`admin` / `admin123`（生产环境请修改默认密码）
 
 ---
 
