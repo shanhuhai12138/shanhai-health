@@ -134,3 +134,23 @@ docker-compose*.local.yml
 temp.txt
 plan_content.txt
 
+
+# 工具/IDE 配置目录（不要提交）
+.agents/
+.claude/
+.idea/
+.vs/
+.vscode/
+.reasonix/
+
+# 本地构建/输出目录
+bin/
+doc/
+
+# 临时文件和工具生成的脚本
+_gen_doc.ps1
+_gen_doc.py
+
+# 本地敏感文件
+info.txt
+null
