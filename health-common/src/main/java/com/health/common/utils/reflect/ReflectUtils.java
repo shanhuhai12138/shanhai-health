@@ -12,6 +12,7 @@ import org.apache.commons.lang3.Validate;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.health.common.exception.ServiceException;
 import com.health.common.core.text.Convert;
 import com.health.common.utils.DateUtils;
 
@@ -378,7 +379,7 @@ public class ReflectUtils
     {
         if (instance == null)
         {
-            throw new RuntimeException("Instance must not be null");
+            throw new ServiceException("Instance must not be null");
         }
         Class clazz = instance.getClass();
         if (clazz != null && clazz.getName().contains(CGLIB_CLASS_SEPARATOR))

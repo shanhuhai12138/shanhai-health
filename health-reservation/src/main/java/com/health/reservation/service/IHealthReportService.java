@@ -61,10 +61,17 @@ public interface IHealthReportService
 
     /**
      * 生成综合健康分析报告
-     * 聚合测评结果和情绪数据，组装JSON后创建报告记录
+     * 聚合测评结果、情绪数据和AI分析
      *
      * @param userId 用户ID
      * @return 报告编号
      */
     public String generateComprehensiveReport(Long userId);
+
+    /**
+     * 重新生成AI分析和建议内容
+     *
+     * @param reportId 报告ID
+     */
+    public void regenerateAiContent(Long reportId);
 }

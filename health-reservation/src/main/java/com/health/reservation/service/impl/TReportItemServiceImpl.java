@@ -4,6 +4,7 @@ import java.util.List;
 import com.health.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.health.reservation.mapper.TReportItemMapper;
 import com.health.reservation.domain.TReportItem;
 import com.health.reservation.service.ITReportItemService;
@@ -15,6 +16,7 @@ import com.health.reservation.service.ITReportItemService;
  * @date 2026-07-02
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class TReportItemServiceImpl implements ITReportItemService
 {
     @Autowired

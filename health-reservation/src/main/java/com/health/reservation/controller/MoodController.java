@@ -2,6 +2,7 @@ package com.health.reservation.controller;
 
 import java.util.List;
 import java.util.Map;
+import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +79,7 @@ public class MoodController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:mood:add')")
     @Log(title = "情绪记录", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody MoodRecord moodRecord)
+    public AjaxResult add(@Valid @RequestBody MoodRecord moodRecord)
     {
         return toAjax(moodService.insertMoodRecord(moodRecord));
     }
@@ -89,7 +90,7 @@ public class MoodController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:mood:edit')")
     @Log(title = "情绪记录", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody MoodRecord moodRecord)
+    public AjaxResult edit(@Valid @RequestBody MoodRecord moodRecord)
     {
         return toAjax(moodService.updateMoodRecord(moodRecord));
     }
@@ -136,8 +137,9 @@ public class MoodController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('reservation:mood:query')")
     @GetMapping("/statistics/chart")
-    public AjaxResult chartData(@RequestParam("userId") Long userId)
+    public AjaxResult chartData(@RequestParam(required = false) Long userId)
     {
+        if (userId == null) userId = com.health.common.utils.SecurityUtils.getUserId();
         return success(moodService.selectDistribution(userId));
     }
 

@@ -6,6 +6,7 @@ import com.health.common.utils.DateUtils;
 import com.health.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.health.reservation.mapper.AppointmentMapper;
 import com.health.reservation.domain.Appointment;
 import com.health.reservation.service.IAppointmentService;
@@ -18,6 +19,7 @@ import com.health.reservation.service.INotificationService;
  * @date 2026-07-11
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class AppointmentServiceImpl implements IAppointmentService
 {
     @Autowired

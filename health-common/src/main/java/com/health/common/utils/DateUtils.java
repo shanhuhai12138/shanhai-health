@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import com.health.common.exception.ServiceException;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
@@ -87,7 +88,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
         }
         catch (ParseException e)
         {
-            throw new RuntimeException(e);
+            throw new ServiceException(e.getMessage());
         }
     }
 

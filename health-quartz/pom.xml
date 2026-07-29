@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>health</artifactId>
         <groupId>com.health</groupId>
@@ -17,7 +16,13 @@
 
     <dependencies>
 
-        <!-- 定时任务 -->
+        <!-- Spring Boot Quartz Starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
+
+        <!-- 定时任务核心库 -->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
@@ -27,6 +32,12 @@
         <dependency>
             <groupId>com.health</groupId>
             <artifactId>health-common</artifactId>
+        </dependency>
+
+        <!-- 预约模块（用于ReminderJob访问Appointment和INotificationService） -->
+        <dependency>
+            <groupId>com.health</groupId>
+            <artifactId>health-reservation</artifactId>
         </dependency>
 
     </dependencies>

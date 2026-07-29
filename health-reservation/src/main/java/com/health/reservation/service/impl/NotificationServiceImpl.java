@@ -5,6 +5,7 @@ import java.util.List;
 import com.health.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.health.reservation.mapper.NotificationMapper;
 import com.health.reservation.domain.Notification;
 import com.health.reservation.service.INotificationService;
@@ -16,6 +17,7 @@ import com.health.reservation.service.INotificationService;
  * @date 2026-07-14
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class NotificationServiceImpl implements INotificationService
 {
     @Autowired

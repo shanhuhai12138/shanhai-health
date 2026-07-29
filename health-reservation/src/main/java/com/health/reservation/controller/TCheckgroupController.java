@@ -1,6 +1,7 @@
 package com.health.reservation.controller;
 
 import java.util.List;
+import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +76,7 @@ public class TCheckgroupController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:checkgroup:add')")
     @Log(title = "检查组管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody TCheckgroup tCheckgroup)
+    public AjaxResult add(@Valid @RequestBody TCheckgroup tCheckgroup)
     {
         return toAjax(tCheckgroupService.insertTCheckgroup(tCheckgroup));
     }
@@ -86,7 +87,7 @@ public class TCheckgroupController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:checkgroup:edit')")
     @Log(title = "检查组管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody TCheckgroup tCheckgroup)
+    public AjaxResult edit(@Valid @RequestBody TCheckgroup tCheckgroup)
     {
         return toAjax(tCheckgroupService.updateTCheckgroup(tCheckgroup));
     }

@@ -1,5 +1,7 @@
 package com.health.common.utils.bean;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.regex.Pattern;
  */
 public class BeanUtils extends org.springframework.beans.BeanUtils
 {
+    private static final Logger log = LoggerFactory.getLogger(BeanUtils.class);
+
     /** Bean方法名中属性名开始的下标 */
     private static final int BEAN_METHOD_PROP_INDEX = 3;
 
@@ -36,7 +40,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            log.error("Bean属性复制异常", e);
         }
     }
 

@@ -2,11 +2,14 @@ package com.health.reservation.controller;
 
 import java.io.IOException;
 import java.util.List;
+import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.health.common.annotation.Log;
 import com.health.common.annotation.Anonymous;
 import com.health.common.core.controller.BaseController;
@@ -27,6 +30,8 @@ import com.health.common.core.page.TableDataInfo;
 @RequestMapping("/reservation/ordersetting")
 public class TOrdersettingController extends BaseController
 {
+    private static final Logger log = LoggerFactory.getLogger(TOrdersettingController.class);
+
     @Autowired
     private ITOrdersettingService tOrdersettingService;
 
@@ -71,7 +76,7 @@ public class TOrdersettingController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:ordersetting:add')")
     @Log(title = "预约设置", businessType = BusinessType.INSERT)
     @PostMapping("/add")
-    public AjaxResult add(@RequestBody TOrdersetting tOrdersetting)
+    public AjaxResult add(@Valid @RequestBody TOrdersetting tOrdersetting)
     {
         return toAjax(tOrdersettingService.insertTOrdersetting(tOrdersetting));
     }
@@ -82,7 +87,7 @@ public class TOrdersettingController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:ordersetting:edit')")
     @Log(title = "预约设置", businessType = BusinessType.UPDATE)
     @PutMapping("/editNumberByOrderDate")
-    public AjaxResult editNumberByOrderDate(@RequestBody TOrdersetting tOrdersetting)
+    public AjaxResult editNumberByOrderDate(@Valid @RequestBody TOrdersetting tOrdersetting)
     {
         return toAjax(tOrdersettingService.editNumberByOrderDate(tOrdersetting));
     }
@@ -93,7 +98,7 @@ public class TOrdersettingController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:ordersetting:edit')")
     @Log(title = "预约设置", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody TOrdersetting tOrdersetting)
+    public AjaxResult edit(@Valid @RequestBody TOrdersetting tOrdersetting)
     {
         return toAjax(tOrdersettingService.updateTOrdersetting(tOrdersetting));
     }
@@ -169,7 +174,7 @@ public class TOrdersettingController extends BaseController
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            log.error("导入预约设置异常", e);
             return AjaxResult.error("导入失败：" + e.getMessage());
         }
     }

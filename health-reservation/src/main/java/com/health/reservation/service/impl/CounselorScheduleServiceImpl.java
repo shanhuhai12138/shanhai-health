@@ -5,6 +5,7 @@ import com.health.common.utils.DateUtils;
 import com.health.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.health.reservation.mapper.CounselorScheduleMapper;
 import com.health.reservation.domain.CounselorSchedule;
 import com.health.reservation.service.ICounselorScheduleService;
@@ -16,6 +17,7 @@ import com.health.reservation.service.ICounselorScheduleService;
  * @date 2026-07-09
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class CounselorScheduleServiceImpl implements ICounselorScheduleService
 {
     @Autowired

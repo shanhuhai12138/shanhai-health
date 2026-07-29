@@ -26,6 +26,7 @@ import com.health.reservation.service.ITOrdersettingService;
  * @date 2026-06-30
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class TOrdersettingServiceImpl implements ITOrdersettingService
 {
     private static final Logger log = LoggerFactory.getLogger(TOrdersettingServiceImpl.class);

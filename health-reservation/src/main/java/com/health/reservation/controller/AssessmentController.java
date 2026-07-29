@@ -2,6 +2,7 @@ package com.health.reservation.controller;
 
 import java.util.List;
 import java.util.Map;
+import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,7 +103,7 @@ public class AssessmentController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:assessment:add')")
     @Log(title = "心理量表", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Assessment assessment)
+    public AjaxResult add(@Valid @RequestBody Assessment assessment)
     {
         return toAjax(assessmentService.insertAssessment(assessment));
     }
@@ -113,7 +114,7 @@ public class AssessmentController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:assessment:edit')")
     @Log(title = "心理量表", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Assessment assessment)
+    public AjaxResult edit(@Valid @RequestBody Assessment assessment)
     {
         return toAjax(assessmentService.updateAssessment(assessment));
     }
@@ -157,7 +158,7 @@ public class AssessmentController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:assessment:add')")
     @Log(title = "测评结果", businessType = BusinessType.INSERT)
     @PostMapping("/result")
-    public AjaxResult addResult(@RequestBody AssessmentResult assessmentResult)
+    public AjaxResult addResult(@Valid @RequestBody AssessmentResult assessmentResult)
     {
         return toAjax(assessmentResultService.insertAssessmentResult(assessmentResult));
     }
@@ -178,7 +179,7 @@ public class AssessmentController extends BaseController
      */
     @Anonymous
     @PostMapping("/submit")
-    public AjaxResult submit(@RequestBody Map<String, Object> submitData)
+    public AjaxResult submit(@Valid @RequestBody Map<String, Object> submitData)
     {
         Map<String, Object> result = assessmentService.submitAssessment(submitData);
         return success(result);

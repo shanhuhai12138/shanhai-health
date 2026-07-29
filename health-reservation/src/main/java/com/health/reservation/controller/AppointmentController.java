@@ -1,6 +1,7 @@
 package com.health.reservation.controller;
 
 import java.util.List;
+import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +79,7 @@ public class AppointmentController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:appointment:add')")
     @Log(title = "预约记录", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Appointment appointment)
+    public AjaxResult add(@Valid @RequestBody Appointment appointment)
     {
         return toAjax(appointmentService.insertAppointment(appointment));
     }
@@ -89,7 +90,7 @@ public class AppointmentController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:appointment:edit')")
     @Log(title = "预约记录", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Appointment appointment)
+    public AjaxResult edit(@Valid @RequestBody Appointment appointment)
     {
         return toAjax(appointmentService.updateAppointment(appointment));
     }
@@ -165,7 +166,7 @@ public class AppointmentController extends BaseController
      */
     @Anonymous
     @PostMapping("/user/create")
-    public AjaxResult createUserAppointment(@RequestBody Appointment appointment)
+    public AjaxResult createUserAppointment(@Valid @RequestBody Appointment appointment)
     {
         // 设置默认状态为待确认
         appointment.setStatus("0");

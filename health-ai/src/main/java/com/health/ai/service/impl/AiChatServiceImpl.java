@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import com.health.common.utils.SecurityUtils;
 import com.health.ai.config.AiModelProperties;
@@ -18,6 +19,7 @@ import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.model.StreamingResponseHandler;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
 import dev.langchain4j.model.output.Response;
 
 /**
@@ -29,16 +31,25 @@ import dev.langchain4j.model.output.Response;
  * @author ruoyi
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class AiChatServiceImpl implements IAiChatService
 {
     private static final Logger log = LoggerFactory.getLogger(AiChatServiceImpl.class);
+
+    // 线程上下文：前端传的动态 model 和 apiKey（可选）
+    private static final ThreadLocal<String> currentModel = new ThreadLocal<>();
+    private static final ThreadLocal<String> currentApiKey = new ThreadLocal<>();
+
+    public static void setCurrentModel(String model) { currentModel.set(model); }
+    public static void setCurrentApiKey(String key) { currentApiKey.set(key); }
+    public static void clearCurrentConfig() { currentModel.remove(); currentApiKey.remove(); }
 
     /**
      * 流式聊天语言模型
      * 由 AiModelConfig 工厂 Bean 根据 application.yml 中的 provider 配置动态注入，
      * 可能是 OpenAiStreamingChatModel / OllamaStreamingChatModel 等具体实现
      */
-    @Autowired
+    @Autowired(required = false)
     private StreamingChatLanguageModel streamingModel;
 
     /** AI 模型配置属性（模型名称、温度、最大 Token、系统提示词等） */
@@ -151,10 +162,34 @@ public class AiChatServiceImpl implements IAiChatService
         // 4. 构建完整的消息上下文（SystemMessage + 历史消息）
         List<ChatMessage> messages = buildMessages(conversationId);
 
-        // 5. 调用 LangChain4j 流式接口（回调在 LangChain4j 内部线程执行，不阻塞当前线程）
+        // 5. 选择模型：优先使用用户指定的 model/apikey，否则用默认注入的 streamingModel
+        StreamingChatLanguageModel activeModel = streamingModel;
+        String dynApiKey = currentApiKey.get();
+        String dynModel = currentModel.get();
+        if (dynApiKey != null && !dynApiKey.isEmpty())
+        {
+            // 用户传了 API Key → 用动态创建的模型实例
+            String baseUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1";
+            if ("deepseek".equals(dynModel)) baseUrl = "https://api.deepseek.com/v1";
+            else if ("ollama".equals(dynModel)) baseUrl = "http://localhost:11434/v1";
+            activeModel = OpenAiStreamingChatModel.builder()
+                    .baseUrl(baseUrl)
+                    .apiKey(dynApiKey)
+                    .modelName(dynModel != null ? dynModel : modelProps.getModelName())
+                    .build();
+            log.info("使用用户自定义 API Key 创建模型: provider={}", dynModel);
+        }
+        else if (activeModel == null)
+        {
+            sendSse(emitter, "error", "AI 服务未配置，请在聊天页设置中填写 API Key");
+            emitter.complete();
+            return;
+        }
+
+        // 6. 调用 LangChain4j 流式接口
         StringBuilder fullReply = new StringBuilder();
 
-        streamingModel.generate(messages, new StreamingResponseHandler<dev.langchain4j.data.message.AiMessage>()
+        activeModel.generate(messages, new StreamingResponseHandler<dev.langchain4j.data.message.AiMessage>()
         {
             /**
              * 每收到一个 token 片段时触发

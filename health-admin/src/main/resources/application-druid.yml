@@ -8,7 +8,8 @@ spring:
             master:
                 url: jdbc:mysql://localhost:3306/health?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
                 username: root
-                password: Lyyyyforever567
+                # ★ 使用环境变量：-DDB_PASSWORD=xxx，或在 IDEA VM Options 设置
+                password: ${DB_PASSWORD:Lyyyyforever567}
             # 从库数据源
             slave:
                 # 从数据源开关/默认关闭
@@ -47,7 +48,7 @@ spring:
                 allow:
                 url-pattern: /druid/*
                 # 控制台管理用户名和密码
-                login-username: ruoyi
+                login-username: admin
                 login-password: 123456
             filter:
                 stat:

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import com.health.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.health.reservation.mapper.TSetmealMapper;
 import com.health.reservation.mapper.TCheckgroupMapper;
 import com.health.reservation.mapper.TCheckgroupCheckitemMapper;
@@ -25,6 +26,7 @@ import com.health.reservation.service.ITSetmealService;
  * @date 2026-06-27
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class TSetmealServiceImpl implements ITSetmealService 
 {
     @Autowired

@@ -4,6 +4,7 @@ import java.util.List;
 import com.health.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.health.reservation.mapper.AssessmentResultMapper;
 import com.health.reservation.domain.AssessmentResult;
 import com.health.reservation.service.IAssessmentResultService;
@@ -15,6 +16,7 @@ import com.health.reservation.service.IAssessmentResultService;
  * @date 2026-07-09
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class AssessmentResultServiceImpl implements IAssessmentResultService
 {
     @Autowired

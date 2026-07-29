@@ -4,6 +4,7 @@ import java.util.List;
 import com.health.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.health.reservation.mapper.TCheckitemMapper;
 import com.health.reservation.domain.TCheckitem;
 import com.health.reservation.service.ITCheckitemService;
@@ -15,6 +16,7 @@ import com.health.reservation.service.ITCheckitemService;
  * @date 2026-06-26
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class TCheckitemServiceImpl implements ITCheckitemService 
 {
     @Autowired

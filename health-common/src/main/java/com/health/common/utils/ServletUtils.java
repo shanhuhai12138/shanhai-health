@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.health.common.constant.Constants;
 import com.health.common.core.text.Convert;
 
@@ -24,6 +26,8 @@ import com.health.common.core.text.Convert;
  */
 public class ServletUtils
 {
+    private static final Logger log = LoggerFactory.getLogger(ServletUtils.class);
+
     /**
      * 获取String参数
      */
@@ -147,7 +151,7 @@ public class ServletUtils
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            log.error("写入ServletResponse异常", e);
         }
     }
 
