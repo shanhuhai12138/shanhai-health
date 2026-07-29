@@ -104,10 +104,6 @@ public class SecurityConfig
                     // 静态资源，可匿名访问
                     .requestMatchers(HttpMethod.GET, "/", "/*.html", "/**.html", "/**.css", "/**.js", "/profile/**").permitAll()
                     .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/druid/**").permitAll()
-                    // AI对话接口匿名访问
-                    .requestMatchers("/ai/chat/**").permitAll()
-                    // 体检报告用户端匿名访问
-                    .requestMatchers("/reservation/report/user/**").permitAll()
                     // 除上面外的所有请求全部需要鉴权认证
                     .anyRequest().authenticated();
             })
@@ -130,3 +126,13 @@ public class SecurityConfig
         return new BCryptPasswordEncoder();
     }
 }
+
+
+
+
+
+
+
+
+
+

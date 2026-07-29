@@ -10,6 +10,8 @@ import org.apache.ibatis.io.VFS;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +24,9 @@ import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.util.ClassUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.health.common.exception.ServiceException;
 import com.health.common.utils.StringUtils;
 
 /**
@@ -32,6 +37,8 @@ import com.health.common.utils.StringUtils;
 @Configuration
 public class MyBatisConfig
 {
+    private static final Logger log = LoggerFactory.getLogger(MyBatisConfig.class);
+
     @Autowired
     private Environment env;
 
@@ -64,7 +71,7 @@ public class MyBatisConfig
                             }
                             catch (ClassNotFoundException e)
                             {
-                                e.printStackTrace();
+                                log.error("扫描mybatis包异常", e);
                             }
                         }
                     }
@@ -81,12 +88,12 @@ public class MyBatisConfig
             }
             else
             {
-                throw new RuntimeException("mybatis typeAliasesPackage 路径扫描错误,参数typeAliasesPackage:" + typeAliasesPackage + "未找到任何包");
+                throw new ServiceException("mybatis typeAliasesPackage 路径扫描错误,参数typeAliasesPackage:" + typeAliasesPackage + "未找到任何包");
             }
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            log.error("扫描mybatis别名包异常", e);
         }
         return typeAliasesPackage;
     }

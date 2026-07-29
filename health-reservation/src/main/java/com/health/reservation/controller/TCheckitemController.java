@@ -1,6 +1,7 @@
 package com.health.reservation.controller;
 
 import java.util.List;
+import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +76,7 @@ public class TCheckitemController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:checkitem:add')")
     @Log(title = "检查项管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody TCheckitem tCheckitem)
+    public AjaxResult add(@Valid @RequestBody TCheckitem tCheckitem)
     {
         return toAjax(tCheckitemService.insertTCheckitem(tCheckitem));
     }
@@ -86,7 +87,7 @@ public class TCheckitemController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:checkitem:edit')")
     @Log(title = "检查项管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody TCheckitem tCheckitem)
+    public AjaxResult edit(@Valid @RequestBody TCheckitem tCheckitem)
     {
         return toAjax(tCheckitemService.updateTCheckitem(tCheckitem));
     }

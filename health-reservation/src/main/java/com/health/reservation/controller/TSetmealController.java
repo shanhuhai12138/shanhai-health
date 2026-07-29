@@ -2,6 +2,7 @@ package com.health.reservation.controller;
 
 import java.util.List;
 import java.util.Map;
+import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,7 @@ public class TSetmealController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:setmeal:add')")
     @Log(title = "套餐组", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody TSetmeal tSetmeal)
+    public AjaxResult add(@Valid @RequestBody TSetmeal tSetmeal)
     {
         return toAjax(tSetmealService.insertTSetmeal(tSetmeal));
     }
@@ -88,7 +89,7 @@ public class TSetmealController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:setmeal:edit')")
     @Log(title = "套餐组", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody TSetmeal tSetmeal)
+    public AjaxResult edit(@Valid @RequestBody TSetmeal tSetmeal)
     {
         return toAjax(tSetmealService.updateTSetmeal(tSetmeal));
     }
@@ -121,7 +122,7 @@ public class TSetmealController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:setmeal:edit')")
     @Log(title = "套餐组", businessType = BusinessType.UPDATE)
     @PutMapping("/checkgroups/batch")
-    public AjaxResult batchSetCheckgroups(@RequestBody Map<String, Object> params)
+    public AjaxResult batchSetCheckgroups(@Valid @RequestBody Map<String, Object> params)
     {
         Long setmealId = Long.valueOf(params.get("setmealId").toString());
         @SuppressWarnings("unchecked")

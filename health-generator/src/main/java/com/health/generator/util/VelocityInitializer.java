@@ -2,6 +2,7 @@ package com.health.generator.util;
 
 import java.util.Properties;
 import org.apache.velocity.app.Velocity;
+import com.health.common.exception.ServiceException;
 import com.health.common.constant.Constants;
 
 /**
@@ -28,7 +29,7 @@ public class VelocityInitializer
         }
         catch (Exception e)
         {
-            throw new RuntimeException(e);
+            throw new ServiceException(e.getMessage());
         }
     }
 }

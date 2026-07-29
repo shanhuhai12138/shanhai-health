@@ -6,6 +6,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import com.health.common.enums.BusinessType;
 import com.health.reservation.domain.HealthReport;
 import com.health.reservation.service.IHealthReportService;
 import com.health.common.core.page.TableDataInfo;
+import jakarta.validation.Valid;
 
 /**
  * 综合健康报告Controller
@@ -63,12 +66,46 @@ public class HealthReportController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:report:add')")
     @Log(title = "综合健康报告", businessType = BusinessType.INSERT)
     @PostMapping("/generate")
-    public AjaxResult generate(@RequestBody Map<String, Object> params)
+    public AjaxResult generate(@Valid @RequestBody Map<String, Object> params)
     {
         @SuppressWarnings("unchecked")
         Map<String, Object> p = (Map<String, Object>) params;
         Long userId = Long.valueOf(p.get("userId").toString());
         String reportNo = healthReportService.generateComprehensiveReport(userId);
         return success("报告生成成功").put("reportNo", reportNo);
+    }
+
+    /**
+     * 重新生成AI分析和建议
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:report:edit')")
+    @Log(title = "综合健康报告", businessType = BusinessType.UPDATE)
+    @PutMapping("/regenerate/{id}")
+    public AjaxResult regenerate(@PathVariable Long id)
+    {
+        healthReportService.regenerateAiContent(id);
+        return success("AI内容重新生成成功");
+    }
+
+    /**
+     * 修改健康报告
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:report:edit')")
+    @Log(title = "综合健康报告", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public AjaxResult edit(@Valid @RequestBody HealthReport healthReport)
+    {
+        return toAjax(healthReportService.updateHealthReport(healthReport));
+    }
+
+    /**
+     * 删除健康报告
+     */
+    @PreAuthorize("@ss.hasPermi('reservation:report:remove')")
+    @Log(title = "综合健康报告", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids)
+    {
+        return toAjax(healthReportService.deleteHealthReportByIds(ids));
     }
 }

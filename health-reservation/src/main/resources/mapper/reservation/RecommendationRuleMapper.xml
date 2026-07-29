@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.health.reservation.mapper.RecommendationRuleMapper">
+
+    <resultMap id="RecommendationRuleResult" type="com.health.reservation.domain.RecommendationRule">
+        <id     property="id"              column="id"/>
+        <result property="ruleName"        column="rule_name"/>
+        <result property="conditionType"   column="condition_type"/>
+        <result property="conditionField"  column="condition_field"/>
+        <result property="conditionValue"  column="condition_value"/>
+        <result property="recommendType"   column="recommend_type"/>
+        <result property="recommendId"     column="recommend_id"/>
+        <result property="priority"        column="priority"/>
+        <result property="status"          column="status"/>
+    </resultMap>
+
+    <select id="selectEnabledRules" resultMap="RecommendationRuleResult">
+        SELECT id, rule_name, condition_type, condition_field, condition_value,
+               recommend_type, recommend_id, priority, status
+        FROM t_recommendation_rule
+        WHERE status = '0'
+        ORDER BY priority DESC
+    </select>
+
+</mapper>

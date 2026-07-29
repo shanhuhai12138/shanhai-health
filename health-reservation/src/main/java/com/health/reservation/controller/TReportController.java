@@ -2,6 +2,7 @@ package com.health.reservation.controller;
 
 import java.util.*;
 import java.text.SimpleDateFormat;
+import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +92,7 @@ public class TReportController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:report:add')")
     @Log(title = "体检报告", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody TReport tReport)
+    public AjaxResult add(@Valid @RequestBody TReport tReport)
     {
         return toAjax(tReportService.insertTReport(tReport));
     }
@@ -102,7 +103,7 @@ public class TReportController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:report:edit')")
     @Log(title = "体检报告", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody TReport tReport)
+    public AjaxResult edit(@Valid @RequestBody TReport tReport)
     {
         return toAjax(tReportService.updateTReport(tReport));
     }
@@ -198,7 +199,7 @@ public class TReportController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:report:image:add')")
     @Log(title = "体检报告图像", businessType = BusinessType.INSERT)
     @PostMapping("/image")
-    public AjaxResult addImage(@RequestBody TReportImage tReportImage)
+    public AjaxResult addImage(@Valid @RequestBody TReportImage tReportImage)
     {
         return toAjax(tReportImageService.insertTReportImage(tReportImage));
     }
@@ -209,7 +210,7 @@ public class TReportController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:report:image:edit')")
     @Log(title = "体检报告图像", businessType = BusinessType.UPDATE)
     @PutMapping("/image")
-    public AjaxResult editImage(@RequestBody TReportImage tReportImage)
+    public AjaxResult editImage(@Valid @RequestBody TReportImage tReportImage)
     {
         return toAjax(tReportImageService.updateTReportImage(tReportImage));
     }

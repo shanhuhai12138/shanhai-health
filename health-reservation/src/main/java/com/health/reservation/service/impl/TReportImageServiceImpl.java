@@ -5,6 +5,7 @@ import com.health.common.utils.DateUtils;
 import com.health.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.health.reservation.mapper.TReportImageMapper;
 import com.health.reservation.domain.TReportImage;
 import com.health.reservation.service.ITReportImageService;
@@ -16,6 +17,7 @@ import com.health.reservation.service.ITReportImageService;
  * @date 2026-07-17
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class TReportImageServiceImpl implements ITReportImageService
 {
     @Autowired

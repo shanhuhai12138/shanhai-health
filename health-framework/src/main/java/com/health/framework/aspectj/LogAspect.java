@@ -131,7 +131,6 @@ public class LogAspect
         {
             // 记录本地异常日志
             log.error("异常信息:{}", exp.getMessage());
-            exp.printStackTrace();
         }
         finally
         {

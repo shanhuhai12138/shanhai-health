@@ -40,7 +40,7 @@ VALUES
 -- ----------------------------
 -- 3. SAS 焦虑自评量表（20题简版用3题演示）
 -- ----------------------------
-INSERT INTO `assessment` (`id`, `code`, `name`, `description`, `total_score`, `severity_levels`, `estimated_duration`, `category`, `status`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (3, 'SAS', '焦虑自评量表', 'SAS是由Zung编制的焦虑自评量表，用于评估焦虑症状的轻重程度。标准分=整数部分×100/20。', 80, '[{"level":"正常","min":20,"max":50,"desc":"焦虑水平正常"},{"level":"轻度","min":51,"max":59,"desc":"有轻度焦虑症状"},{"level":"中度","min":60,"max":69,"desc":"有明显焦虑症状，建议寻求专业帮助"},{"level":"重度","min":70,"max":80,"desc":"焦虑症状严重，建议尽快就医"}]', 15, 'psychological', '0', 'admin', NOW(), 'admin', NOW(), NULL);
+INSERT INTO `assessment` (`id`, `code`, `name`, `description`, `total_score`, `severity_levels`, `estimated_duration`, `category`, `status`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES (3, 'SAS', '焦虑自评量表', 'SAS是由Zung编制的焦虑自评量表，用于评估焦虑症状的轻重程度。', 9, '[{"level":"正常","min":0,"max":3,"desc":"焦虑水平正常"},{"level":"轻度","min":4,"max":5,"desc":"有轻度焦虑症状"},{"level":"中度","min":6,"max":7,"desc":"有明显焦虑症状"},{"level":"重度","min":8,"max":9,"desc":"焦虑症状严重"}]', 5, 'psychological', '0', 'admin', NOW(), 'admin', NOW(), NULL);
 
 INSERT INTO `assessment_question` (`id`, `assessment_id`, `question_no`, `question_text`, `question_type`, `options`, `reverse_score`, `sort_order`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`)
 VALUES

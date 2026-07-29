@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.health.common.exception.ServiceException;
 import com.health.common.utils.DateUtils;
 import com.health.reservation.domain.TSetmeal;
 import com.health.reservation.domain.TOrdersetting;
@@ -77,7 +78,7 @@ public class UserReservationServiceImpl implements IUserReservationService
         TSetmeal setmeal = tSetmealMapper.selectTSetmealById(setmealId);
         if (setmeal == null)
         {
-            throw new RuntimeException("套餐不存在");
+            throw new ServiceException("套餐不存在");
         }
 
         // 2. 查询套餐关联的检查组
@@ -154,28 +155,28 @@ public class UserReservationServiceImpl implements IUserReservationService
         TSetmeal setmeal = tSetmealMapper.selectTSetmealById(setmealId);
         if (setmeal == null)
         {
-            throw new RuntimeException("套餐不存在");
+            throw new ServiceException("套餐不存在");
         }
 
         // 2. 查询该日期的预约设置
         TOrdersetting ordersetting = userReservationMapper.selectOrdersettingByDate(orderDate);
         if (ordersetting == null)
         {
-            throw new RuntimeException("该日期不可预约");
+            throw new ServiceException("该日期不可预约");
         }
 
         // 3. 检查剩余名额
         long availableCount = ordersetting.getNumber() - ordersetting.getReservations();
         if (availableCount <= 0)
         {
-            throw new RuntimeException("该日期已约满");
+            throw new ServiceException("该日期已约满");
         }
 
         // 4. 乐观锁扣减库存
         int affected = userReservationMapper.increaseReservations(orderDate);
         if (affected == 0)
         {
-            throw new RuntimeException("该日期已约满");
+            throw new ServiceException("该日期已约满");
         }
 
         // 5. 生成报告编号：TR + yyyyMMdd + 4位序号
@@ -253,11 +254,11 @@ public class UserReservationServiceImpl implements IUserReservationService
         TReport report = tReportMapper.selectTReportByReportNo(reportNo);
         if (report == null)
         {
-            throw new RuntimeException("预约记录不存在");
+            throw new ServiceException("预约记录不存在");
         }
         if (!"0".equals(report.getReportStatus()))
         {
-            throw new RuntimeException("只有待录入状态的预约可以取消");
+            throw new ServiceException("只有待录入状态的预约可以取消");
         }
 
         // 释放库存

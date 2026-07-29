@@ -1,6 +1,7 @@
 package com.health.reservation.controller;
 
 import java.util.List;
+import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +76,7 @@ public class CounselingController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:counselor:add')")
     @Log(title = "咨询师管理", businessType = BusinessType.INSERT)
     @PostMapping("/counselor")
-    public AjaxResult add(@RequestBody Counselor counselor)
+    public AjaxResult add(@Valid @RequestBody Counselor counselor)
     {
         return toAjax(counselorService.insertCounselor(counselor));
     }
@@ -86,7 +87,7 @@ public class CounselingController extends BaseController
     @PreAuthorize("@ss.hasPermi('reservation:counselor:edit')")
     @Log(title = "咨询师管理", businessType = BusinessType.UPDATE)
     @PutMapping("/counselor")
-    public AjaxResult edit(@RequestBody Counselor counselor)
+    public AjaxResult edit(@Valid @RequestBody Counselor counselor)
     {
         return toAjax(counselorService.updateCounselor(counselor));
     }

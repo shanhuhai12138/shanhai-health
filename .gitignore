@@ -25,6 +25,14 @@ target/
 *.iml
 *.ipr
 
+### Eclipse ###
+*.launch
+*.cproject
+.project
+
+### VS Code ###
+.vscode/
+
 ### JRebel ###
 rebel.xml
 
@@ -42,6 +50,26 @@ nbdist/
 *.xml.versionsBackup
 *.swp
 
-!*/build/*.java
-!*/build/*.html
-!*/build/*.xml
+# Windows
+Thumbs.db
+desktop.ini
+
+# Node.js / 前端
+node_modules/
+dist/
+.npm-cache/
+
+# 临时诊断文件
+info.txt
+routers.json
+response.json
+tmp/
+
+# IDE 代理配置
+.agents/
+.claude/
+
+# 环境变量 & 本地配置
+.env
+.env.local
+.env.*.local

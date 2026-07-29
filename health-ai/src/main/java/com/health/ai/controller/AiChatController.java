@@ -20,6 +20,7 @@ import com.health.common.utils.SecurityUtils;
 import com.health.ai.domain.AiConversation;
 import com.health.ai.domain.AiMessage;
 import com.health.ai.service.IAiChatService;
+import com.health.ai.service.impl.AiChatServiceImpl;
 
 /**
  * AI 对话 Controller
@@ -134,12 +135,22 @@ public class AiChatController extends BaseController
      * @return SseEmitter 实例（Spring 自动将其转为 text/event-stream 响应）
      */
     @GetMapping(value = "/stream", produces = "text/event-stream;charset=UTF-8")
-    public SseEmitter stream(@RequestParam Long conversationId, @RequestParam String message)
+    public SseEmitter stream(@RequestParam Long conversationId, @RequestParam String message,
+                              @RequestParam(required = false) String model,
+                              @RequestParam(required = false) String apiKey)
     {
         SseEmitter emitter = new SseEmitter(0L);
         Long userId = SecurityUtils.getUserId();
-        // 新线程异步执行，当前 Tomcat 线程立即返回 emitter，不阻塞线程池
-        new Thread(() -> aiChatService.chat(conversationId, message, userId, emitter)).start();
+        // 将 model 和 apiKey 存入线程上下文，chat 方法内部读取
+        if (model != null) AiChatServiceImpl.setCurrentModel(model);
+        if (apiKey != null) AiChatServiceImpl.setCurrentApiKey(apiKey);
+        new Thread(() -> {
+            try {
+                aiChatService.chat(conversationId, message, userId, emitter);
+            } finally {
+                AiChatServiceImpl.clearCurrentConfig();
+            }
+        }).start();
         return emitter;
     }
 }
